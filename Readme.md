@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Руслан Шедиков](https://up.htmlacademy.ru/javascript/11/user/364873).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Сорокин](https://htmlacademy.ru/profile/id538633).
 
 ---
 
