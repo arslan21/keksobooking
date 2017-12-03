@@ -1,4 +1,4 @@
-Hotel'use strict';
+'use strict';
 
 var TITLES = [
   'Большая уютная квартира',
@@ -43,7 +43,8 @@ function getFeaturesList() {
 
 function renderHotel() {
   var hotel = {};
-  hotel.author = 'img/avatars/user0' + Math.ceil(Math.random() * 8) + '.png';
+  hotel.author = {};
+  hotel.author.avatar = 'img/avatars/user0' + Math.ceil(Math.random() * 8) + '.png';
   hotel.offer = {};
   hotel.location = {};
   hotel.location.x = Math.floor(300 + Math.random() * (900 + 1 - 300));
@@ -67,11 +68,10 @@ function renderHotelList() {
   for (var i = 0; i < 8; i++) {
     hotelList[i] = renderHotel();
     for (var j = 0; j < i; j++) {
-      if (hotelList[i].author === hotelList[j].author) {
+      if (hotelList[i].author.avatar === hotelList[j].author.avatar) {
         i--;
       }
     }
-    console.log(hotelList[i].author);
   }
   return hotelList;
 }
@@ -87,15 +87,13 @@ function getPins(hotel) {
   similarHotel.classList.remove('.map__pin--main');
 
   mapPinButton.setAttribute('style', 'left: ' + hotel.location.x + 'px;' + 'top: ' + hotel.location.y + 'px;');
-  mapPinButton.querySelector('img').setAttribute('src', hotel.author);
+  mapPinButton.querySelector('img').setAttribute('src', hotel.author.avatar);
 
   return similarHotel;
 }
 
-// console.log(mapPinButton);
 
 var hotelList = renderHotelList();
-console.log(hotelList);
 
 var fragment = document.createDocumentFragment();
 for (var i = 0; i < hotelList.length; i++) {
@@ -103,3 +101,36 @@ for (var i = 0; i < hotelList.length; i++) {
 }
 
 mapPins.appendChild(fragment);
+
+
+var template = document.querySelector('template').content;
+var mapCard = template.querySelector('.map__card');
+var mapFiltersContainer = map.querySelector('.map__filters-container');
+
+mapCard.querySelector('h3').textContent = hotelList[0].offer.title;
+mapCard.querySelector('p:first-of-type').textContent = hotelList[0].offer.address;
+mapCard.querySelector('p.popup__price').textContent = hotelList[0].offer.price + '&#x20bd;' + '/ночь';
+
+switch (hotelList[0].offer.type) {
+  case 'flat':
+    var hotelTypeText = 'Квартира';
+    break;
+  case 'bungalo':
+    hotelTypeText = 'Бунгало';
+    break;
+  case 'house':
+    hotelTypeText = 'Дом';
+    break;
+  default:
+    hotelTypeText = 'Иное';
+}
+mapCard.querySelector('h4').textContent = hotelTypeText;
+mapCard.querySelector('p:nth-of-type(3)').textContent = hotelList[0].offer.rooms + ' комнаты для ' + hotelList[0].offer.guests + ' гостей';
+mapCard.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + hotelList[0].offer.checkin + ', выезд до ' + hotelList[0].offer.checkout;
+
+// mapCard.querySelector('popup__features')
+
+mapCard.querySelector('p:nth-of-type(5)').textContent = hotelList[0].offer.description;
+mapCard.querySelector('.popup__avatar').setAttribute('src', hotelList[0].author.avatar);
+
+map.insertBefore(mapCard, mapFiltersContainer);
