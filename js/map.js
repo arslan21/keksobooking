@@ -37,6 +37,11 @@ function getFeaturesList() {
   featuresList.length = Math.ceil(Math.random() * FEATUES_LIST.length);
   for (var i = 0; i < featuresList.length; i++) {
     featuresList[i] = FEATUES_LIST[Math.floor(Math.random() * FEATUES_LIST.length)];
+    for (var j = 0; j < i; j++) {
+      if (featuresList[i] === featuresList[j]) {
+        i--;
+      }
+    }
   }
   return featuresList;
 }
@@ -128,7 +133,16 @@ mapCard.querySelector('h4').textContent = hotelTypeText;
 mapCard.querySelector('p:nth-of-type(3)').textContent = hotelList[0].offer.rooms + ' комнаты для ' + hotelList[0].offer.guests + ' гостей';
 mapCard.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + hotelList[0].offer.checkin + ', выезд до ' + hotelList[0].offer.checkout;
 
-// mapCard.querySelector('popup__features')
+var featuresListPopup = mapCard.querySelector('.popup__features');
+var featuresListAll = featuresListPopup.querySelectorAll('.feature');
+for (var k = 0; k < featuresListAll.length; k++) {
+  featuresListAll[k].classList = '';
+  if (k < hotelList[0].offer.feature.length) {
+    featuresListAll[k].classList = 'feature feature--' + hotelList[0].offer.feature[k];
+  }
+}
+
+// console.log(hotelList[0].offer.feature);
 
 mapCard.querySelector('p:nth-of-type(5)').textContent = hotelList[0].offer.description;
 mapCard.querySelector('.popup__avatar').setAttribute('src', hotelList[0].author.avatar);
