@@ -18,7 +18,7 @@ var TYPES = [
   'bungalo'
 ];
 
-var FEATUES_LIST = [
+var FEATURES_LIST = [
   'wifi',
   'dishwasher',
   'parking',
@@ -35,12 +35,14 @@ var CHECK_TIMES = [
 
 function getFeaturesList() {
   var featuresList = [];
-  featuresList.length = Math.ceil(Math.random() * FEATUES_LIST.length);
+  featuresList.length = Math.ceil(Math.random() * FEATURES_LIST.length);
+  var existedFeatures = {};
   for (var i = 0; i < featuresList.length; i++) {
-    featuresList[i] = FEATUES_LIST[Math.floor(Math.random() * FEATUES_LIST.length)];
-    var existedFeatures = {};
-    if (existedFeatures[featuresList[i].FEATUES_LIST] === true) {
-      existedFeatures[featuresList[i].FEATUES_LIST] = true;
+    featuresList[i] = FEATURES_LIST[Math.floor(Math.random() * FEATURES_LIST.length)];
+    if (existedFeatures[featuresList[i]] === true) {
+      i--;
+    } else {
+      existedFeatures[featuresList[i]] = true;
     }
   }
   return featuresList;
@@ -70,15 +72,14 @@ function renderHotel() {
 
 function renderHotelList() {
   var hotelList = [];
+  var existedAvatars = {};
   for (var i = 0; i < 8; i++) {
     hotelList[i] = renderHotel();
-    var existedAvatars = {};
     if (existedAvatars[hotelList[i].author.avatar] === true) {
       i--;
     } else {
       existedAvatars[hotelList[i].author.avatar] = true;
     }
-    console.log(hotelList[i].author.avatar);
   }
   return hotelList;
 }
@@ -99,7 +100,6 @@ function getPins(hotel) {
   return similarHotel;
 }
 
-
 var hotelList = renderHotelList();
 
 var fragment = document.createDocumentFragment();
@@ -115,22 +115,14 @@ var mapCard = template.querySelector('.map__card');
 var mapFiltersContainer = map.querySelector('.map__filters-container');
 
 mapCard.querySelector('h3').textContent = hotelList[0].offer.title;
-mapCard.querySelector('p:first-of-type').textContent = hotelList[0].offer.address;
-mapCard.querySelector('p.popup__price').textContent = hotelList[0].offer.price + '&#x20bd;' + '/ночь';
 
-switch (hotelList[0].offer.type) {
-  case 'flat':
-    var hotelTypeText = 'Квартира';
-    break;
-  case 'bungalo':
-    hotelTypeText = 'Бунгало';
-    break;
-  case 'house':
-    hotelTypeText = 'Дом';
-    break;
-  default:
-    hotelTypeText = 'Иное';
-}
+var offerTypes = {
+  flat: 'Квартира',
+  bungalo: 'Бунгало',
+  house: 'Дом'
+};
+var hotelTypeText = offerTypes[hotelList[0].offer.type] ? offerTypes[hotelList[0].offer.type] : 'Иное';
+
 mapCard.querySelector('h4').textContent = hotelTypeText;
 mapCard.querySelector('p:nth-of-type(3)').textContent = hotelList[0].offer.rooms + ' комнаты для ' + hotelList[0].offer.guests + ' гостей';
 mapCard.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + hotelList[0].offer.checkin + ', выезд до ' + hotelList[0].offer.checkout;
@@ -145,8 +137,6 @@ for (var k = 0; k < featuresListAll.length; k++) {
     featuresListPopup.removeChild(featuresListAll[k]);
   }
 }
-
-// console.log(hotelList[0].offer.feature);
 
 mapCard.querySelector('p:nth-of-type(5)').textContent = hotelList[0].offer.description;
 mapCard.querySelector('.popup__avatar').setAttribute('src', hotelList[0].author.avatar);
