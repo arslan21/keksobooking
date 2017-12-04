@@ -1,3 +1,4 @@
+
 'use strict';
 
 var TITLES = [
@@ -37,10 +38,9 @@ function getFeaturesList() {
   featuresList.length = Math.ceil(Math.random() * FEATUES_LIST.length);
   for (var i = 0; i < featuresList.length; i++) {
     featuresList[i] = FEATUES_LIST[Math.floor(Math.random() * FEATUES_LIST.length)];
-    for (var j = 0; j < i; j++) {
-      if (featuresList[i] === featuresList[j]) {
-        i--;
-      }
+    var existedFeatures = {};
+    if (existedFeatures[featuresList[i].FEATUES_LIST] === true) {
+      existedFeatures[featuresList[i].FEATUES_LIST] = true;
     }
   }
   return featuresList;
@@ -72,11 +72,13 @@ function renderHotelList() {
   var hotelList = [];
   for (var i = 0; i < 8; i++) {
     hotelList[i] = renderHotel();
-    for (var j = 0; j < i; j++) {
-      if (hotelList[i].author.avatar === hotelList[j].author.avatar) {
-        i--;
-      }
+    var existedAvatars = {};
+    if (existedAvatars[hotelList[i].author.avatar] === true) {
+      i--;
+    } else {
+      existedAvatars[hotelList[i].author.avatar] = true;
     }
+    console.log(hotelList[i].author.avatar);
   }
   return hotelList;
 }
@@ -140,7 +142,7 @@ for (var k = 0; k < featuresListAll.length; k++) {
   if (k < hotelList[0].offer.feature.length) {
     featuresListAll[k].classList = 'feature feature--' + hotelList[0].offer.feature[k];
   } else {
-    featuresListPopup.removeChild(featuresListAll[k])
+    featuresListPopup.removeChild(featuresListAll[k]);
   }
 }
 
