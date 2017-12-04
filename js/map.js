@@ -139,6 +139,8 @@ for (var k = 0; k < featuresListAll.length; k++) {
   featuresListAll[k].classList = '';
   if (k < hotelList[0].offer.feature.length) {
     featuresListAll[k].classList = 'feature feature--' + hotelList[0].offer.feature[k];
+  } else {
+    featuresListPopup.removeChild(featuresListAll[k])
   }
 }
 
