@@ -115,8 +115,7 @@ function showMapCard(hotel) {
   var mapCardForShow = mapCard.cloneNode(true);
 
   mapCardForShow.querySelector('h3').textContent = hotel.offer.title;
-
-  mapCardForShow.querySelector('small').textContent = hotel.location.x + ', ' + hotel.location.y;
+  mapCardForShow.querySelector('small').textContent = hotel.offer.address;
   mapCardForShow.querySelector('.popup__price').textContent = hotel.offer.price + ' \u20BD/ночь';
 
   var offerTypes = {
