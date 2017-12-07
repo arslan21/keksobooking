@@ -96,7 +96,7 @@ var hotelList = renderHotelList();
 
 function renderPin(hotel) {
   var hotelPin = templatePinButton.cloneNode(true);
-  hotelPin.setAttribute('style', 'left: ' + (hotel.location.x - 3)  + 'px;' + 'top: ' + (hotel.location.y - buttonImage.height) + 'px;');
+  hotelPin.setAttribute('style', 'left: ' + (hotel.location.x - 3) + 'px;' + 'top: ' + (hotel.location.y - buttonImage.height) + 'px;');
   hotelPin.querySelector('img').setAttribute('src', hotel.author.avatar);
   return hotelPin;
 }
