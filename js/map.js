@@ -90,12 +90,13 @@ map.classList.remove('map--faded');
 
 var template = document.querySelector('template').content;
 var templatePinButton = template.querySelector('.map__pin');
+var buttonImage = templatePinButton.querySelector('img');
 
 var hotelList = renderHotelList();
 
 function renderPin(hotel) {
   var hotelPin = templatePinButton.cloneNode(true);
-  hotelPin.setAttribute('style', 'left: ' + hotel.location.x + 'px;' + 'top: ' + hotel.location.y + 'px;' + 'transform: translate(-62%, -140%);');
+  hotelPin.setAttribute('style', 'left: ' + (hotel.location.x - 3)  + 'px;' + 'top: ' + (hotel.location.y - buttonImage.height) + 'px;');
   hotelPin.querySelector('img').setAttribute('src', hotel.author.avatar);
   return hotelPin;
 }
@@ -114,8 +115,6 @@ function showMapCard(hotel) {
   var mapCardForShow = mapCard.cloneNode(true);
 
   mapCardForShow.querySelector('h3').textContent = hotel.offer.title;
-  // console.log(hotel.location.x);
-  // debugger;
 
   mapCardForShow.querySelector('small').textContent = hotel.location.x + ', ' + hotel.location.y;
   mapCardForShow.querySelector('.popup__price').textContent = hotel.offer.price + ' \u20BD/ночь';
@@ -140,7 +139,6 @@ function showMapCard(hotel) {
     } else {
       featuresListPopup.removeChild(featuresListAll[k]);
     }
-    // mapCardForShow.querySelector('p:nth-of-type(5)').textContent = '';
     mapCardForShow.querySelector('p:nth-of-type(5)').textContent = hotel.offer.description;
     mapCardForShow.querySelector('.popup__avatar').setAttribute('src', hotel.author.avatar);
   }
