@@ -70,7 +70,7 @@ function generationHotel() {
   return hotel;
 }
 
-function renderHotelList() {
+function getHotelList() {
   var hotelList = [];
   var existedAvatars = {};
   for (var i = 0; i < 8; i++) {
@@ -92,7 +92,7 @@ var template = document.querySelector('template').content;
 var templatePinButton = template.querySelector('.map__pin');
 var buttonImage = templatePinButton.querySelector('img');
 
-var hotelList = renderHotelList();
+var hotelList = getHotelList();
 
 function renderPin(hotel) {
   var hotelPin = templatePinButton.cloneNode(true);
