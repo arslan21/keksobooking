@@ -86,13 +86,13 @@ function getHotelList() {
 
 var map = document.querySelector('.map');
 var mapPins = map.querySelector('.map__pins');
-map.classList.remove('map--faded');
+// map.classList.remove('map--faded');
 
 var template = document.querySelector('template').content;
 var templatePinButton = template.querySelector('.map__pin');
 var buttonImage = templatePinButton.querySelector('img');
 
-var hotelList = getHotelList();
+// var hotelList = getHotelList();
 
 function renderPin(hotel) {
   var hotelPin = templatePinButton.cloneNode(true);
@@ -101,12 +101,13 @@ function renderPin(hotel) {
   return hotelPin;
 }
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < hotelList.length; i++) {
-  fragment.appendChild(renderPin(hotelList[i]));
+function appendArrFragmentToBlock(array, toBlock) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < array.length; i++) {
+    fragment.appendChild(renderPin(array[i]));
+  }
+  toBlock.appendChild(fragment);
 }
-
-mapPins.appendChild(fragment);
 
 var mapCard = template.querySelector('.map__card');
 var mapFiltersContainer = map.querySelector('.map__filters-container');
@@ -144,5 +145,54 @@ function showMapCard(hotel) {
   return mapCardForShow;
 }
 
-var mapCardForShow = showMapCard(hotelList[0]);
-map.insertBefore(mapCardForShow, mapFiltersContainer);
+// var mapCardForShow = showMapCard(hotelList[0]);
+// map.insertBefore(mapCardForShow, mapFiltersContainer);
+
+//  Перетаскивание указателя
+
+var mapPinMain = map.querySelector('.map__pin--main');
+
+var noticeBlock = document.querySelector('.notice');
+var noticeForm = noticeBlock.querySelector('.notice__form');
+
+mapPinMain.addEventListener('mouseup', function () {
+  noticeForm.classList.remove('notice__form--disabled');
+  map.classList.remove('map--faded');
+  var hotelList = getHotelList();
+
+  //  обновление списка отелей
+  var mapPinsLength = mapPins.children.length
+  for (var i = mapPinsLength; i > 0; i--) {
+    if (mapPins.children[mapPinsLength - 1].classList == "map__pin" || mapPins.children[mapPinsLength - 1].classList == "map__pin map__pin--active") {
+      mapPins.children[mapPinsLength - 1].remove();
+      mapPinsLength--;
+    }
+  }
+
+  appendArrFragmentToBlock(hotelList, mapPins);
+
+  var mapPin = mapPins.querySelectorAll('.map__pin');
+  // mapPin.addEventListener('focus', function () {
+  //   mapPin.classList.addEventListener('map__pin--active')
+  // })
+
+  var mapPinActive = mapPins.querySelector('.map__pin--active');
+  // mapPinActive.addEventListener('focus', function () {
+
+  // })
+  // mapPins.appendChild(fragmentPin);   //  дожна запускаться getHotelList()
+
+  // console.log(mapPin)
+  // debugger
+
+  for (var i = 0; i < hotelList.length; i++) {
+    // console.log(hotelList)
+    mapPin[i + 1].addEventListener('click', function () {
+      this.classList.add('map__pin--active');
+      debugger
+      // var mapCardForShow = showMapCard(hotelList[i]);
+      map.insertBefore(showMapCard(hotelList[i]), mapFiltersContainer);
+    })
+  }
+
+});
