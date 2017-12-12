@@ -38,6 +38,9 @@ var OFFER_TYPES = {
   house: 'Дом'
 };
 
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+
 var map = document.querySelector('.map');
 var mapPins = map.querySelector('.map__pins');
 // var mapPin = mapPins.querySelectorAll('.map__pin');
@@ -131,19 +134,19 @@ function openPopup() {
 }
 
 function enterOpenPopup(evt) {
-  if (evt.keyCode === 13) {
+  if (evt.keyCode === ENTER_KEYCODE) {
     openPopup();
   }
 }
 
 function escClosePopup(evt) {
-  if (evt.keyCode === 27) {
+  if (evt.keyCode === ESC_KEYCODE) {
     closePopup();
   }
 }
 
 function enterClosePopup(evt) {
-  if (evt.keyCode === 13) {
+  if (evt.keyCode === ENTER_KEYCODE) {
     closePopup();
   }
 }
