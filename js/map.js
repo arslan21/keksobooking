@@ -34,8 +34,8 @@ var CHECK_TIMES = [
 
 var map = document.querySelector('.map');
 var mapPins = map.querySelector('.map__pins');
-var mapPin = mapPins.querySelectorAll('.map__pin');
-var mapPinActive = mapPins.querySelector('.map__pin--active');
+// var mapPin = mapPins.querySelectorAll('.map__pin');
+// var mapPinActive = mapPins.querySelector('.map__pin--active');
 var mapPinMain = mapPins.querySelector('.map__pin--main');
 
 var template = document.querySelector('template').content;
@@ -103,20 +103,53 @@ function renderPin(hotel) {
   var mapPin = templatePinButton.cloneNode(true);
   mapPin.setAttribute('style', 'left: ' + (hotel.location.x - 3) + 'px;' + 'top: ' + (hotel.location.y - buttonImage.height) + 'px;');
   mapPin.querySelector('img').setAttribute('src', hotel.author.avatar);
+
+  mapPin.addEventListener('click', openPopup);
+  mapPin.addEventListener('keydown', enterOpenPopup);
+  mapPin.addEventListener('click', function() {
+    getMapCard(hotel);
+  });
+
   return mapPin;
+}
+
+function openPopup() {
+  var mapPinActive = map.querySelector('.map__pin--active');
+  if (mapPinActive !== null) {
+    mapPinActive.classList.remove('map__pin--active');
+  }
+  if (map.querySelector('.popup') !== null) {
+    map.querySelector('.popup').remove();
+  }
+  this.classList.add('map__pin--active');
+}
+
+function enterOpenPopup(evt) {
+  if (evt.keyCode === 13) {
+    openPopup();
+  }
+}
+
+function escClosePopup(evt) {
+  if (evt.keyCode === 27) {
+    closePopup();
+  }
+}
+
+function enterClosePopup(evt) {
+  if (evt.keyCode === 13) {
+    closePopup();
+  }
 }
 
 function closePopup() {
   map.querySelector('.popup').remove();
-  console.log(mapPins);
-  var mapPinActive = mapPins.querySelector('.map__pin--active')
-  console.log(mapPinActive.classList)
-  mapPinActive.classList.remove('map__pin--active')
-  console.log(mapPins);
-  debugger
+  var mapPinActive = mapPins.querySelector('.map__pin--active');
+  mapPinActive.classList.remove('map__pin--active');
+  document.removeEventListener('keydown', closePopup);
 }
 
-function showMapCard(hotel) {
+function getMapCard(hotel) {
   var mapCardForShow = mapCard.cloneNode(true);
 
   mapCardForShow.querySelector('h3').textContent = hotel.offer.title;
@@ -149,51 +182,33 @@ function showMapCard(hotel) {
 
   var popupCloseButton = mapCardForShow.querySelector('.popup__close');
   popupCloseButton.addEventListener('click', closePopup);
+  popupCloseButton.addEventListener('keydown', enterClosePopup);
+  document.addEventListener('keydown', escClosePopup);
 
   map.insertBefore(mapCardForShow, mapFiltersContainer);
 }
 
 function insertPins() {
-
-  var mapPinsLength = mapPins.children.length
+  var mapPinsLength = mapPins.children.length;
   for (var i = mapPinsLength; i > 0; i--) {
-    if (mapPins.children[mapPinsLength - 1].classList == "map__pin" || mapPins.children[mapPinsLength - 1].classList == "map__pin map__pin--active") {
+    if (mapPins.children[mapPinsLength - 1].classList === 'map__pin' || mapPins.children[mapPinsLength - 1].classList === 'map__pin map__pin--active') {
       mapPins.children[mapPinsLength - 1].remove();
       mapPinsLength--;
     }
   }
 
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < hotelList.length; i++) {
-    var hotel = hotelList[i];
-    // var j = i;
-    // debugger
-    fragment.appendChild(renderPin(hotelList[i]));
-
-    var fragmentPin = fragment.querySelectorAll('.map__pin')
-    fragmentPin[i].addEventListener('click', function () {
-      var mapPinActive = map.querySelector('.map__pin--active')
-      if (mapPinActive != null) {
-        mapPinActive.classList.remove('map__pin--active')
-      }
-      debugger
-      if (map.querySelector('.popup') != null) {
-        map.querySelector('.popup').remove()
-      }
-      // debugger
-      this.classList.add('map__pin--active');
-      showMapCard(hotel);
-      console.log(map.querySelector('.popup'))
-    })
+  for (var l = 0; l < hotelList.length; l++) {
+    fragment.appendChild(renderPin(hotelList[l]));
   }
   mapPins.appendChild(fragment);
 }
 
 
-var hotelList = getHotelList()
+var hotelList = getHotelList();
 
 mapPinMain.addEventListener('mouseup', function () {
   noticeForm.classList.remove('notice__form--disabled');
   map.classList.remove('map--faded');
   insertPins();
-})
+});
