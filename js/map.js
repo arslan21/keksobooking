@@ -113,16 +113,28 @@ function renderPin(hotel) {
   mapPin.setAttribute('style', 'left: ' + (hotel.location.x - 3) + 'px;' + 'top: ' + (hotel.location.y - buttonImage.height) + 'px;');
   mapPin.querySelector('img').setAttribute('src', hotel.author.avatar);
 
-  mapPin.addEventListener('click', openPopup);
-  mapPin.addEventListener('keydown', enterOpenPopup);
+  mapPin.addEventListener('click', function (evt) {
+    openPopup(evt);
+  });
+  mapPin.addEventListener('keydown', function (evt) {
+    if (evt === ENTER_KEYCODE) {
+      openPopup(evt);
+    }
+  });
+
   mapPin.addEventListener('click', function () {
     getMapCard(hotel);
+  });
+  mapPin.addEventListener('keydown', function (evt) {
+    if (evt === ENTER_KEYCODE) {
+      getMapCard(hotel);
+    }
   });
 
   return mapPin;
 }
 
-function openPopup() {
+function openPopup(evt) {
   var mapPinActive = map.querySelector('.map__pin--active');
   if (mapPinActive !== null) {
     mapPinActive.classList.remove('map__pin--active');
@@ -130,13 +142,8 @@ function openPopup() {
   if (map.querySelector('.popup') !== null) {
     map.querySelector('.popup').remove();
   }
-  this.classList.add('map__pin--active');
-}
 
-function enterOpenPopup(evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    openPopup();
-  }
+  evt.currentTarget.classList.add('map__pin--active');
 }
 
 function escClosePopup(evt) {
