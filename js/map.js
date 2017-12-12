@@ -106,6 +106,16 @@ function renderPin(hotel) {
   return mapPin;
 }
 
+function closePopup() {
+  map.querySelector('.popup').remove();
+  console.log(mapPins);
+  var mapPinActive = mapPins.querySelector('.map__pin--active')
+  console.log(mapPinActive.classList)
+  mapPinActive.classList.remove('map__pin--active')
+  console.log(mapPins);
+  debugger
+}
+
 function showMapCard(hotel) {
   var mapCardForShow = mapCard.cloneNode(true);
 
@@ -136,26 +146,44 @@ function showMapCard(hotel) {
     mapCardForShow.querySelector('p:nth-of-type(5)').textContent = hotel.offer.description;
     mapCardForShow.querySelector('.popup__avatar').setAttribute('src', hotel.author.avatar);
   }
+
+  var popupCloseButton = mapCardForShow.querySelector('.popup__close');
+  popupCloseButton.addEventListener('click', closePopup);
+
   map.insertBefore(mapCardForShow, mapFiltersContainer);
 }
 
 function insertPins() {
-  // var mapPinsLength = mapPins.children.length
-  // for (var i = mapPinsLength; i > 0; i--) {
-  //   if (mapPins.children[mapPinsLength - 1].classList == "map__pin" || mapPins.children[mapPinsLength - 1].classList == "map__pin map__pin--active") {
-  //     mapPins.children[mapPinsLength - 1].remove();
-  //     mapPinsLength--;
-  //   }
-  // }
+
+  var mapPinsLength = mapPins.children.length
+  for (var i = mapPinsLength; i > 0; i--) {
+    if (mapPins.children[mapPinsLength - 1].classList == "map__pin" || mapPins.children[mapPinsLength - 1].classList == "map__pin map__pin--active") {
+      mapPins.children[mapPinsLength - 1].remove();
+      mapPinsLength--;
+    }
+  }
 
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < hotelList.length; i++) {
-    var hotel = hotelList[i]
+    var hotel = hotelList[i];
+    // var j = i;
+    // debugger
     fragment.appendChild(renderPin(hotelList[i]));
-    var PinPin = fragment.querySelectorAll('.map__pin')
-    PinPin[i].addEventListener('click', function () {
+
+    var fragmentPin = fragment.querySelectorAll('.map__pin')
+    fragmentPin[i].addEventListener('click', function () {
+      var mapPinActive = map.querySelector('.map__pin--active')
+      if (mapPinActive != null) {
+        mapPinActive.classList.remove('map__pin--active')
+      }
+      debugger
+      if (map.querySelector('.popup') != null) {
+        map.querySelector('.popup').remove()
+      }
+      // debugger
       this.classList.add('map__pin--active');
-      showMapCard(hotel)
+      showMapCard(hotel);
+      console.log(map.querySelector('.popup'))
     })
   }
   mapPins.appendChild(fragment);
