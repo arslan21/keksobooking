@@ -32,6 +32,12 @@ var CHECK_TIMES = [
   '14:00'
 ];
 
+var OFFER_TYPES = {
+  flat: 'Квартира',
+  bungalo: 'Бунгало',
+  house: 'Дом'
+};
+
 var map = document.querySelector('.map');
 var mapPins = map.querySelector('.map__pins');
 // var mapPin = mapPins.querySelectorAll('.map__pin');
@@ -106,7 +112,7 @@ function renderPin(hotel) {
 
   mapPin.addEventListener('click', openPopup);
   mapPin.addEventListener('keydown', enterOpenPopup);
-  mapPin.addEventListener('click', function() {
+  mapPin.addEventListener('click', function () {
     getMapCard(hotel);
   });
 
@@ -149,25 +155,9 @@ function closePopup() {
   document.removeEventListener('keydown', closePopup);
 }
 
-function getMapCard(hotel) {
-  var mapCardForShow = mapCard.cloneNode(true);
-
-  mapCardForShow.querySelector('h3').textContent = hotel.offer.title;
-  mapCardForShow.querySelector('small').textContent = hotel.offer.address;
-  mapCardForShow.querySelector('.popup__price').textContent = hotel.offer.price + ' \u20BD/ночь';
-
-  var offerTypes = {
-    flat: 'Квартира',
-    bungalo: 'Бунгало',
-    house: 'Дом'
-  };
-  var hotelTypeText = offerTypes[hotel.offer.type] ? offerTypes[hotel.offer.type] : 'Иное';
-
-  mapCardForShow.querySelector('h4').textContent = hotelTypeText;
-  mapCardForShow.querySelector('p:nth-of-type(3)').textContent = hotel.offer.rooms + ' комнаты для ' + hotel.offer.guests + ' гостей';
-  mapCardForShow.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + hotel.offer.checkin + ', выезд до ' + hotel.offer.checkout;
-
-  var featuresListPopup = mapCardForShow.querySelector('.popup__features');
+//  формирование списка пиктограмм для карточки отеля
+function featuresListForPopup(hotel) {
+  var featuresListPopup = mapCard.querySelector('.popup__features').cloneNode(true);
   var featuresListAll = featuresListPopup.querySelectorAll('.feature');
   for (var k = 0; k < featuresListAll.length; k++) {
     featuresListAll[k].classList = '';
@@ -176,9 +166,27 @@ function getMapCard(hotel) {
     } else {
       featuresListPopup.removeChild(featuresListAll[k]);
     }
-    mapCardForShow.querySelector('p:nth-of-type(5)').textContent = hotel.offer.description;
-    mapCardForShow.querySelector('.popup__avatar').setAttribute('src', hotel.author.avatar);
   }
+  return featuresListPopup;
+}
+
+function getMapCard(hotel) {
+  var mapCardForShow = mapCard.cloneNode(true);
+
+  mapCardForShow.querySelector('h3').textContent = hotel.offer.title;
+  mapCardForShow.querySelector('small').textContent = hotel.offer.address;
+  mapCardForShow.querySelector('.popup__price').textContent = hotel.offer.price + ' \u20BD/ночь';
+
+  var hotelTypeText = OFFER_TYPES[hotel.offer.type] ? OFFER_TYPES[hotel.offer.type] : 'Иное';
+  mapCardForShow.querySelector('h4').textContent = hotelTypeText;
+  mapCardForShow.querySelector('p:nth-of-type(3)').textContent = hotel.offer.rooms + ' комнаты для ' + hotel.offer.guests + ' гостей';
+  mapCardForShow.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + hotel.offer.checkin + ', выезд до ' + hotel.offer.checkout;
+
+  var featuresListPopup = featuresListForPopup(hotel);
+  mapCardForShow.appendChild(featuresListPopup);
+
+  mapCardForShow.querySelector('p:nth-of-type(5)').textContent = hotel.offer.description;
+  mapCardForShow.querySelector('.popup__avatar').setAttribute('src', hotel.author.avatar);
 
   var popupCloseButton = mapCardForShow.querySelector('.popup__close');
   popupCloseButton.addEventListener('click', closePopup);
