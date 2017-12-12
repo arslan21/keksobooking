@@ -186,7 +186,7 @@ function getMapCard(hotel) {
   mapCardForShow.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + hotel.offer.checkin + ', выезд до ' + hotel.offer.checkout;
 
   var featuresListPopup = featuresListForPopup(hotel);
-  mapCardForShow.appendChild(featuresListPopup);
+  mapCardForShow.replaceChild(featuresListPopup, mapCardForShow.querySelector('.popup__features'));
 
   mapCardForShow.querySelector('p:nth-of-type(5)').textContent = hotel.offer.description;
   mapCardForShow.querySelector('.popup__avatar').setAttribute('src', hotel.author.avatar);
