@@ -122,17 +122,8 @@ function renderPin(hotel) {
   mapPin.addEventListener('keydown', function (evt) {
     if (evt === ENTER_KEYCODE) {
       activatePin(evt);
-      // getMapCard(hotel);
     }
   });
-
-  // mapPin.addEventListener('click', function () {
-  // });
-  // mapPin.addEventListener('keydown', function (evt) {
-  //   if (evt === ENTER_KEYCODE) {
-  //   }
-  // });
-
   return mapPin;
 }
 
