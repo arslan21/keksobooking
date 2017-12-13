@@ -50,6 +50,7 @@ var mapPinMain = mapPins.querySelector('.map__pin--main');
 var template = document.querySelector('template').content;
 var templatePinButton = template.querySelector('.map__pin');
 var buttonImage = templatePinButton.querySelector('img');
+var templateCloseButton = template.querySelector('.popup__close');
 
 var mapCard = template.querySelector('.map__card');
 var mapFiltersContainer = map.querySelector('.map__filters-container');
@@ -155,17 +156,17 @@ function escClosePopup(evt) {
 
 function enterClosePopup(evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
-    closePopup();
+    closePopup(evt);
   }
 }
 
 function closePopup() {
+  templateCloseButton.removeEventListener('keydown', enterClosePopup);
+  templateCloseButton.removeEventListener('click', closePopup);
   map.querySelector('.popup').remove();
   var mapPinActive = mapPins.querySelector('.map__pin--active');
   mapPinActive.classList.remove('map__pin--active');
   document.removeEventListener('keydown', escClosePopup);
-  document.removeEventListener('keydown', enterClosePopup);
-  document.removeEventListener('click', closePopup);
 }
 
 //  формирование списка пиктограмм для карточки отеля
@@ -232,16 +233,15 @@ for (var i = 0; i < noticeFields.length; i++) {
 
 function activateNotice() {
   noticeForm.classList.remove('notice__form--disabled');
-  for (var i = 0; i < noticeFields.length; i++) {
-    noticeFields[i].disabled = false;
+  for (var f = 0; f < noticeFields.length; f++) {
+    noticeFields[f].disabled = false;
   }
   map.classList.remove('map--faded');
 }
 
 
-
 var hotelList = getHotelList();
 mapPinMain.addEventListener('mouseup', function () {
-  activateNotice()
+  activateNotice();
   insertPins();
 });
