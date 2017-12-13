@@ -56,6 +56,8 @@ var mapFiltersContainer = map.querySelector('.map__filters-container');
 
 var noticeBlock = document.querySelector('.notice');
 var noticeForm = noticeBlock.querySelector('.notice__form');
+var noticeFields = noticeForm.querySelectorAll('fieldset');
+
 
 function getFeaturesList() {
   var featuresList = [];
@@ -224,11 +226,23 @@ function insertPins() {
   mapPins.appendChild(fragment);
 }
 
+//  работа с полями формы объявления
+for (var i = 0; i < noticeFields.length; i++) {
+  noticeFields[i].disabled = true;
+}
+
+function activateNotice() {
+  noticeForm.classList.remove('notice__form--disabled');
+  for (var i = 0; i < noticeFields.length; i++) {
+    noticeFields[i].disabled = false;
+  }
+  map.classList.remove('map--faded');
+}
+
+
 
 var hotelList = getHotelList();
-
 mapPinMain.addEventListener('mouseup', function () {
-  noticeForm.classList.remove('notice__form--disabled');
-  map.classList.remove('map--faded');
+  activateNotice()
   insertPins();
 });
