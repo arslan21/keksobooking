@@ -114,12 +114,12 @@ function renderPin(hotel) {
   mapPin.querySelector('img').setAttribute('src', hotel.author.avatar);
 
   mapPin.addEventListener('click', function (evt) {
-    openPopup(evt);
+    activatePin(evt);
     getMapCard(hotel);
   });
   mapPin.addEventListener('keydown', function (evt) {
     if (evt === ENTER_KEYCODE) {
-      openPopup(evt);
+      activatePin(evt);
       // getMapCard(hotel);
     }
   });
@@ -134,7 +134,7 @@ function renderPin(hotel) {
   return mapPin;
 }
 
-function openPopup(evt) {
+function activatePin(evt) {
   var mapPinActive = map.querySelector('.map__pin--active');
   if (mapPinActive !== null) {
     mapPinActive.classList.remove('map__pin--active');
