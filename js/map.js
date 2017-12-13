@@ -35,7 +35,8 @@ var CHECK_TIMES = [
 var OFFER_TYPES = {
   flat: 'Квартира',
   bungalo: 'Бунгало',
-  house: 'Дом'
+  house: 'Дом',
+  palace: 'Дворец'
 };
 
 var ESC_KEYCODE = 27;
@@ -58,6 +59,13 @@ var mapFiltersContainer = map.querySelector('.map__filters-container');
 var noticeBlock = document.querySelector('.notice');
 var noticeForm = noticeBlock.querySelector('.notice__form');
 var noticeFields = noticeForm.querySelectorAll('fieldset');
+
+//  работа с полями формы объявления
+for (var i = 0; i < noticeFields.length; i++) {
+  noticeFields[i].disabled = true;
+}
+
+console.log(noticeFields);
 
 function getFeaturesList() {
   var featuresList = [];
@@ -217,11 +225,6 @@ function insertPins() {
   mapPins.appendChild(fragment);
 }
 
-//  работа с полями формы объявления
-for (var i = 0; i < noticeFields.length; i++) {
-  noticeFields[i].disabled = true;
-}
-
 function activateNotice() {
   noticeForm.classList.remove('notice__form--disabled');
   for (var f = 0; f < noticeFields.length; f++) {
@@ -232,7 +235,152 @@ function activateNotice() {
 
 
 var hotelList = getHotelList();
+
 mapPinMain.addEventListener('mouseup', function () {
   activateNotice();
   insertPins();
+  disabeledCapacityOptions();
+  setPriceRange(typeSelectedValue);
 });
+
+
+noticeForm.action = 'https://js.dump.academy/keksobooking';
+
+var addressField = noticeForm.querySelector('#address');
+addressField.required = true;
+addressField.disabled = true;
+
+var titleField = noticeForm.querySelector('#title');
+titleField.setAttribute('minlength', '30');
+titleField.setAttribute('maxlength', '100');
+titleField.required = true;
+
+titleField.addEventListener('invalid', function () {
+  debugger
+  if (titleField.validity.tooShort) {
+    titleField.setCustomValidity('Опишите подробнее Ваше жильё');
+    return;
+  }
+
+  if (titleField.validity.tooLong) {
+    titleField.setCustomValidity('На сервере заканчивается свободное место, попробуйте описать Ваше жильё покороче');
+    return;
+  }
+
+  if (titleField.validity.valueMissing) {
+    titleField.setCustomValidity('Клиенты хотят знать подробности о Вашем жилье');
+    return;
+  }
+});
+
+var priceField = noticeForm.querySelector('#price');
+priceField.required = true;
+priceField.placeholder = 1000;
+
+var typeField = noticeForm.querySelector('#type');
+var minPriceOfType = {
+  'palace': 10000,
+  'house': 5000,
+  'flat': 1000,
+  'bungalo': 0
+};
+
+// var priceValue = priceField.value;
+var typeSelectedValue = typeField.options[typeField.selectedIndex].value;
+
+function priceRange(type) {
+  var min = 0;
+  var max = 1000000;
+  for (var key in minPriceOfType) {
+    if (minPriceOfType[key] || minPriceOfType[key] === 0) {
+      min = minPriceOfType[key];
+      if (type !== key) {
+        max = minPriceOfType[key];
+      } else {
+        break;
+      }
+    }
+  }
+  return {
+    'min': String(min),
+    'max': String(max)
+  };
+}
+
+function setPriceRange(type) {
+  var range = priceRange(type);
+  priceField.min = range.min;
+  priceField.max = range.max;
+}
+
+typeField.addEventListener('change', function () {
+  var type = typeField.options[typeField.selectedIndex].value;
+  setPriceRange(type);
+});
+
+priceField.addEventListener('invalid', function () {
+  var type = typeField.options[typeField.selectedIndex].value;
+
+  if (priceField.validity.rangeUnderflow) {
+    priceField.setCustomValidity(OFFER_TYPES[type] + ' обычно стоит дороже');
+    return;
+  }
+
+  if (priceField.validity.rangeOverflow) {
+    priceField.setCustomValidity(OFFER_TYPES[type] + ' обычно стоит дешевле');
+    return;
+  }
+
+  if (priceField.validity.valueMissing) {
+    priceField.setCustomValidity(OFFER_TYPES[type] + ' обычно сколько-нибудь стоит');
+    return;
+  }
+});
+
+var timeInField = noticeForm.querySelector('#timein');
+var timeOutField = noticeForm.querySelector('#timeout');
+
+timeInField.addEventListener('change', function () {
+  var index = timeInField.selectedIndex;
+  timeOutField.selectedIndex = index;
+});
+
+timeOutField.addEventListener('change', function () {
+  var index = timeOutField.selectedIndex;
+  timeInField.selectedIndex = index;
+});
+
+var roomNumberField = noticeForm.querySelector('#room_number');
+var capacityField = noticeForm.querySelector('#capacity');
+
+roomNumberField.addEventListener('change', function () {
+  disabeledCapacityOptions();
+});
+
+function disabeledCapacityOptions() {
+  var roomSelectedValue = roomNumberField.options[roomNumberField.selectedIndex].value;
+  var capacityOptions = capacityField.options;
+  for (var i = 0; i < capacityOptions.length; i++) {
+    capacityOptions[i].disabled = false;
+    for (var j = 0; j < capacityOptions.length; j++) {
+      if (roomSelectedValue !== '100') {
+        if (roomSelectedValue < capacityOptions[j].value) {
+          capacityOptions[j].disabled = true;
+        }
+        if (capacityOptions[j].value === '0') {
+          capacityOptions[j].disabled = true;
+        }
+      } else {
+        if (capacityOptions[j].value > '0') {
+          capacityOptions[j].disabled = true;
+        }
+      }
+    }
+  }
+}
+capacityField.addEventListener('errorMessage', function () {
+  debugger
+  if (capacityField.errorMessage) {
+    capacityField.setCustomValidity('Количество мест ограничено')
+  }
+})
