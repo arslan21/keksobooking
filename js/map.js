@@ -162,7 +162,9 @@ function closePopup() {
   map.querySelector('.popup').remove();
   var mapPinActive = mapPins.querySelector('.map__pin--active');
   mapPinActive.classList.remove('map__pin--active');
-  document.removeEventListener('keydown', closePopup);
+  document.removeEventListener('keydown', escClosePopup);
+  document.removeEventListener('keydown', enterClosePopup);
+  document.removeEventListener('click', closePopup);
 }
 
 //  формирование списка пиктограмм для карточки отеля
