@@ -58,7 +58,6 @@ var noticeBlock = document.querySelector('.notice');
 var noticeForm = noticeBlock.querySelector('.notice__form');
 var noticeFields = noticeForm.querySelectorAll('fieldset');
 
-
 function getFeaturesList() {
   var featuresList = [];
   featuresList.length = Math.ceil(Math.random() * FEATURES_LIST.length);
