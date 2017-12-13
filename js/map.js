@@ -115,21 +115,21 @@ function renderPin(hotel) {
 
   mapPin.addEventListener('click', function (evt) {
     openPopup(evt);
-  });
-  mapPin.addEventListener('keydown', function (evt) {
-    if (evt === ENTER_KEYCODE) {
-      openPopup(evt);
-    }
-  });
-
-  mapPin.addEventListener('click', function () {
     getMapCard(hotel);
   });
   mapPin.addEventListener('keydown', function (evt) {
     if (evt === ENTER_KEYCODE) {
-      getMapCard(hotel);
+      openPopup(evt);
+      // getMapCard(hotel);
     }
   });
+
+  // mapPin.addEventListener('click', function () {
+  // });
+  // mapPin.addEventListener('keydown', function (evt) {
+  //   if (evt === ENTER_KEYCODE) {
+  //   }
+  // });
 
   return mapPin;
 }
