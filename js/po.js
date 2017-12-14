@@ -65,8 +65,6 @@ for (var i = 0; i < noticeFields.length; i++) {
   noticeFields[i].disabled = true;
 }
 
-console.log(noticeFields);
-
 function getFeaturesList() {
   var featuresList = [];
   featuresList.length = Math.ceil(Math.random() * FEATURES_LIST.length);
@@ -256,7 +254,7 @@ titleField.setAttribute('maxlength', '100');
 titleField.required = true;
 
 titleField.addEventListener('invalid', function () {
-  debugger
+  // debugger
   if (titleField.validity.tooShort) {
     titleField.setCustomValidity('Опишите подробнее Ваше жильё');
     return;
@@ -378,23 +376,17 @@ function disabeledCapacityOptions() {
     }
   }
 }
-// capacityField.addEventListener('change', function () {
-//   debugger
-//   if (capacityField.valueMissing) {
-//     capacityField.setCustomValidity('Количество мест ограничено')
-//   }
-// })
-//
-// function capacityFieldValidation() {
-//   console.log(capacityField.validity);
-//
-//   if (capacityField.value == '') {
-//     console.log('dddd');
-//   }
-// }
-//
-// capacityField.addEventListener('change', capacityFieldValidation)
-//
-// capacityFieldValidation()
-//
-// var submitForm = noticeForm.querySelector('.form__submit')
+
+function capacityFieldValidation() {
+  console.log(capacityField.validity);
+
+  if (capacityField.value == '') {
+    console.log('dddd');
+  }
+}
+
+capacityField.addEventListener('change', capacityFieldValidation)
+
+capacityFieldValidation()
+
+var submitForm = noticeForm.querySelector('.form__submit')
