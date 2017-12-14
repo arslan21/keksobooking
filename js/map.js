@@ -65,7 +65,7 @@ for (var i = 0; i < noticeFields.length; i++) {
   noticeFields[i].disabled = true;
 }
 
-console.log(noticeFields);
+// console.log(noticeFields);
 
 function getFeaturesList() {
   var featuresList = [];
@@ -244,15 +244,17 @@ mapPinMain.addEventListener('mouseup', function () {
 });
 
 
-noticeForm.action = 'https://js.dump.academy/keksobooking';
-
 var addressField = noticeForm.querySelector('#address');
 addressField.required = true;
 addressField.disabled = true;
 
+function addressFieldValidation() {
+  if (addressField.value) {
+    invalidField(addressField)
+  }
+}
+
 var titleField = noticeForm.querySelector('#title');
-titleField.setAttribute('minlength', '30');
-titleField.setAttribute('maxlength', '100');
 titleField.required = true;
 
 titleField.addEventListener('invalid', function () {
@@ -275,7 +277,6 @@ titleField.addEventListener('invalid', function () {
 
 var priceField = noticeForm.querySelector('#price');
 priceField.required = true;
-priceField.placeholder = 1000;
 
 var typeField = noticeForm.querySelector('#type');
 var minPriceOfType = {
@@ -378,23 +379,28 @@ function disabeledCapacityOptions() {
     }
   }
 }
-// capacityField.addEventListener('change', function () {
-//   debugger
-//   if (capacityField.valueMissing) {
-//     capacityField.setCustomValidity('Количество мест ограничено')
-//   }
-// })
-//
-// function capacityFieldValidation() {
-//   console.log(capacityField.validity);
-//
-//   if (capacityField.value == '') {
-//     console.log('dddd');
-//   }
-// }
-//
+
+function capacityFieldValidation() {
+  if (capacityField.options[capacityField.selectedIndex].disabled) {
+    invalidField(capacityField)
+  }
+}
+
 // capacityField.addEventListener('change', capacityFieldValidation)
-//
-// capacityFieldValidation()
-//
-// var submitForm = noticeForm.querySelector('.form__submit')
+function invalidField(field) {
+  field.setAttribute('style', 'border: 2px solid red')
+}
+
+var submitForm = noticeForm.querySelector('.form__submit');
+submitForm.addEventListener('click', function (evt) {
+  debugger
+  // preventDefault()
+  // var capacityFieldValitity = capacityFieldValidation();
+  // var addressFieldValitity = addressFieldValidation();
+  var capacityFieldValitity = true
+  var addressFieldValitity = true
+  if (capacityFieldValitity || addressFieldValitity) {
+    evt.preventDefault
+  }
+  // noticeForm.submit();
+})
