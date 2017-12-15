@@ -15,17 +15,17 @@ var OFFER_TYPES = {
   flat: {
     name: 'Квартира',
     minPrice: 1000,
-    maxPrice: 4999
+    maxPrice: 1000000
   },
   bungalo: {
     name: 'Бунгало',
     minPrice: 0,
-    maxPrice: 999
+    maxPrice: 1000000
   },
   house: {
     name: 'Дом',
     minPrice: 5000,
-    maxPrice: 9999
+    maxPrice: 1000000
   },
   palace: {
     name: 'Дворец',
