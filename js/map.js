@@ -11,12 +11,6 @@ var TITLES = [
   'Неуютное бунгало по колено в воде'
 ];
 
-var TYPES = [
-  'flat',
-  'house',
-  'bungalo'
-];
-
 var OFFER_TYPES = {
   flat: {
     name: 'Квартира',
@@ -109,7 +103,8 @@ function generationHotel() {
   hotel.offer.title = TITLES[Math.floor(Math.random() * TITLES.length)];
   hotel.offer.address = hotel.location.x + ', ' + hotel.location.y;
   hotel.offer.price = (Math.floor(10 + Math.random() * (10000 + 1 - 10))) * 100;
-  hotel.offer.type = TYPES[Math.floor(Math.random() * TYPES.length)];
+  var typesForGeneration = Object.keys(OFFER_TYPES)
+  hotel.offer.type = typesForGeneration[Math.floor(Math.random() * typesForGeneration.length)];
   hotel.offer.rooms = Math.ceil(Math.random() * 5);
   hotel.offer.guests = Math.ceil(Math.random() * 15);
   hotel.offer.checkin = CHECK_TIMES[Math.floor(Math.random() * CHECK_TIMES.length)];
@@ -327,17 +322,17 @@ roomNumberField.addEventListener('change', function () {
 function titleFieldValidation() {
   debugger;
   if (titleField.validity.tooShort) {
-    // titleField.setCustomValidity('Опишите подробнее Ваше жильё');
+    titleField.setCustomValidity('Опишите подробнее Ваше жильё');
     return true;
   }
 
   if (titleField.validity.tooLong) {
-    // titleField.setCustomValidity('На сервере заканчивается свободное место, попробуйте описать Ваше жильё покороче');
+    titleField.setCustomValidity('На сервере заканчивается свободное место, попробуйте описать Ваше жильё покороче');
     return true;
   }
 
   if (titleField.validity.valueMissing) {
-    // titleField.setCustomValidity('Клиенты хотят знать подробности о Вашем жилье');
+    titleField.setCustomValidity('Клиенты хотят знать подробности о Вашем жилье');
     return true;
   }
   return false;
