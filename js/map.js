@@ -61,8 +61,8 @@ var noticeForm = noticeBlock.querySelector('.notice__form');
 var noticeFields = noticeForm.querySelectorAll('fieldset');
 
 //  работа с полями формы объявления
-for (var i = 0; i < noticeFields.length; i++) {
-  noticeFields[i].disabled = true;
+for (var n = 0; n < noticeFields.length; n++) {
+  noticeFields[n].disabled = true;
 }
 
 // console.log(noticeFields);
@@ -107,12 +107,12 @@ function generationHotel() {
 function getHotelList() {
   var hotelList = [];
   var existedAvatars = {};
-  for (var i = 0; i < 8; i++) {
-    hotelList[i] = generationHotel();
-    if (existedAvatars[hotelList[i].author.avatar] === true) {
-      i--;
+  for (var h = 0; h < 8; h++) {
+    hotelList[h] = generationHotel();
+    if (existedAvatars[hotelList[h].author.avatar] === true) {
+      h--;
     } else {
-      existedAvatars[hotelList[i].author.avatar] = true;
+      existedAvatars[hotelList[h].author.avatar] = true;
     }
   }
   return hotelList;
@@ -211,7 +211,7 @@ function getMapCard(hotel) {
 
 function insertPins() {
   var mapPinsLength = mapPins.children.length;
-  for (var i = mapPinsLength; i > 0; i--) {
+  for (var p = mapPinsLength; p > 0; p--) {
     if (mapPins.children[mapPinsLength - 1].classList === 'map__pin' || mapPins.children[mapPinsLength - 1].classList === 'map__pin map__pin--active') {
       mapPins.children[mapPinsLength - 1].remove();
       mapPinsLength--;
@@ -297,8 +297,8 @@ function setPriceRange(type) {
 function disabeledCapacityOptions() {
   var roomSelectedValue = roomNumberField.options[roomNumberField.selectedIndex].value;
   var capacityOptions = capacityField.options;
-  for (var i = 0; i < capacityOptions.length; i++) {
-    capacityOptions[i].disabled = false;
+  for (var c = 0; c < capacityOptions.length; c++) {
+    capacityOptions[c].disabled = false;
     for (var j = 0; j < capacityOptions.length; j++) {
       if (roomSelectedValue !== '100') {
         if (roomSelectedValue < capacityOptions[j].value) {
@@ -337,7 +337,7 @@ roomNumberField.addEventListener('change', function () {
 
 // Валидация полей
 function titleFieldValidation() {
-  // debugger
+  debugger;
   if (titleField.validity.tooShort) {
     // titleField.setCustomValidity('Опишите подробнее Ваше жильё');
     return true;
@@ -352,12 +352,12 @@ function titleFieldValidation() {
     // titleField.setCustomValidity('Клиенты хотят знать подробности о Вашем жилье');
     return true;
   }
-
+  return false;
   // titleField.setCustomValidity(' ');
 }
 
 function priceFieldValidation() {
-  var type = typeField.options[typeField.selectedIndex].value;
+  // var type = typeField.options[typeField.selectedIndex].value;
 
   if (priceField.validity.rangeUnderflow) {
     // priceField.setCustomValidity(OFFER_TYPES[type] + ' обычно стоит дороже');
@@ -373,29 +373,32 @@ function priceFieldValidation() {
     // priceField.setCustomValidity(OFFER_TYPES[type] + ' обычно сколько-нибудь стоит');
     return true;
   }
+  return false;
 
   // priceField.setCustomValidity(' ');
 }
 
 function addressFieldValidation() {
-  if (addressField.value == '') {
-    return true
+  if (addressField.value === '') {
+    return true;
   }
+  return false;
 }
 
 function capacityFieldValidation() {
   if (capacityField.options[capacityField.selectedIndex].disabled) {
-    return true
+    return true;
   }
+  return false;
 }
 
 
 //  Маркировка незаполненных полей
 function invalidFieldBordering(validationState, field) {
   if (validationState) {
-    field.setAttribute('style', 'border-color: red')
+    field.setAttribute('style', 'border-color: red');
   } else {
-    field.removeAttribute('style')
+    field.removeAttribute('style');
   }
 }
 
