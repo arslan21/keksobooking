@@ -31,9 +31,7 @@ function renderPin(hotel) {
     getMapCard(hotel);
   });
   mapPin.addEventListener('keydown', function (evt) {
-    if (evt === ENTER_KEYCODE) {
-      activatePin(evt);
-    }
+    util.isEnterEvent(evt, activatePin);
   });
   return mapPin;
 }

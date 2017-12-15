@@ -171,7 +171,5 @@ submitForm.addEventListener('click', function (evt) {
   submitingForm(evt);
 });
 submitForm.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    submitingForm(evt);
-  }
+  isEnterEvent(evt, submitingForm);
 });

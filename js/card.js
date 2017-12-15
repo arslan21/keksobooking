@@ -28,7 +28,6 @@ function getMapCard(hotel) {
   map.insertBefore(mapCardForShow, mapFiltersContainer);
 }
 
-
 //  формирование списка пиктограмм для карточки отеля
 function featuresListForPopup(hotel) {
   var featuresListPopup = mapCard.querySelector('.popup__features').cloneNode(true);
@@ -46,15 +45,11 @@ function featuresListForPopup(hotel) {
 
 
 function escClosePopup(evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    closePopup();
-  }
+  util.isEscEvent(evt, closePopup);
 }
 
 function enterClosePopup(evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    closePopup(evt);
-  }
+  util.isEnterEvent(evt, closePopup);
 }
 
 function closePopup() {

@@ -67,21 +67,20 @@ function getHotelList() {
 function generationHotel() {
   var hotel = {};
   hotel.author = {};
-  hotel.author.avatar = 'img/avatars/user0' + getRandomCeil(8) + '.png';
-
+  hotel.author.avatar = 'img/avatars/user0' + util.getRandomCeil(8) + '.png';
   hotel.offer = {};
   hotel.location = {};
-  hotel.location.x = getRandomFloor(300, 900);
-  hotel.location.y = getRandomFloor(100, 500);
+  hotel.location.x = util.getRandomFloor(300, 900);
+  hotel.location.y = util.getRandomFloor(100, 500);
   hotel.offer.address = hotel.location.x + ', ' + hotel.location.y;
-  hotel.offer.title = getRandomElem(TITLES);
-  hotel.offer.price = getRandomFloor(10, 10000) * 100;
+  hotel.offer.title = util.getRandomElem(TITLES);
+  hotel.offer.price = util.getRandomFloor(10, 10000) * 100;
   var typesForGeneration = Object.keys(OFFER_TYPES);
-  hotel.offer.type = getRandomElem(typesForGeneration);
-  hotel.offer.rooms = getRandomCeil(5);
-  hotel.offer.guests = getRandomCeil(15);
-  hotel.offer.checkin = getRandomElem(CHECK_TIMES);
-  hotel.offer.checkout = getRandomElem(CHECK_TIMES);
+  hotel.offer.type = util.getRandomElem(typesForGeneration);
+  hotel.offer.rooms = util.getRandomCeil(5);
+  hotel.offer.guests = util.getRandomCeil(15);
+  hotel.offer.checkin = util.getRandomElem(CHECK_TIMES);
+  hotel.offer.checkout = util.getRandomElem(CHECK_TIMES);
   hotel.offer.feature = getFeaturesList();
   hotel.offer.description = '';
   hotel.offer.photos = [];
@@ -90,10 +89,10 @@ function generationHotel() {
 
 function getFeaturesList() {
   var featuresList = [];
-  featuresList.length = getRandomCeil(FEATURES_LIST.length);
+  featuresList.length = util.getRandomCeil(FEATURES_LIST.length);
   var existedFeatures = {};
   for (var i = 0; i < featuresList.length; i++) {
-    featuresList[i] = getRandomElem(FEATURES_LIST);
+    featuresList[i] = util.getRandomElem(FEATURES_LIST);
     if (existedFeatures[featuresList[i]] === true) {
       i--;
     } else {
