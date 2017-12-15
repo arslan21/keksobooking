@@ -15,8 +15,8 @@ function insertPins() {
   }
 
   var fragment = document.createDocumentFragment();
-  for (var l = 0; l < hotelList.length; l++) {
-    fragment.appendChild(renderPin(hotelList[l]));
+  for (var l = 0; l < window.list.length; l++) {
+    fragment.appendChild(renderPin(window.list[l]));
   }
   mapPins.appendChild(fragment);
 }

@@ -1,8 +1,6 @@
 'use strict'
-
-var hotelList = getHotelList();
-
 mapPinMain.addEventListener('mouseup', function () {
+  debugger
   activateNotice();
   insertPins();
   disabeledCapacityOptions();
