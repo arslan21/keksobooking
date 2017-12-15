@@ -17,6 +17,29 @@ var TYPES = [
   'bungalo'
 ];
 
+var OFFER_TYPES = {
+  flat: {
+    name: 'Квартира',
+    minPrice: 1000,
+    maxPrice: 4999
+  },
+  bungalo: {
+    name: 'Бунгало',
+    minPrice: 0,
+    maxPrice: 999
+  },
+  house: {
+    name: 'Дом',
+    minPrice: 5000,
+    maxPrice: 9999
+  },
+  palace: {
+    name: 'Дворец',
+    minPrice: 10000,
+    maxPrice: 1000000
+  }
+};
+
 var FEATURES_LIST = [
   'wifi',
   'dishwasher',
@@ -31,13 +54,6 @@ var CHECK_TIMES = [
   '13:00',
   '14:00'
 ];
-
-var OFFER_TYPES = {
-  flat: 'Квартира',
-  bungalo: 'Бунгало',
-  house: 'Дом',
-  palace: 'Дворец'
-};
 
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
@@ -190,8 +206,7 @@ function getMapCard(hotel) {
   mapCardForShow.querySelector('small').textContent = hotel.offer.address;
   mapCardForShow.querySelector('.popup__price').textContent = hotel.offer.price + ' \u20BD/ночь';
 
-  var hotelTypeText = OFFER_TYPES[hotel.offer.type] ? OFFER_TYPES[hotel.offer.type] : 'Иное';
-  mapCardForShow.querySelector('h4').textContent = hotelTypeText;
+  mapCardForShow.querySelector('h4').textContent = OFFER_TYPES[hotel.offer.type].name;
   mapCardForShow.querySelector('p:nth-of-type(3)').textContent = hotel.offer.rooms + ' комнаты для ' + hotel.offer.guests + ' гостей';
   mapCardForShow.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + hotel.offer.checkin + ', выезд до ' + hotel.offer.checkout;
 
@@ -255,12 +270,6 @@ priceField.required = true;
 
 var typeField = noticeForm.querySelector('#type');
 var typeSelectedValue = typeField.options[typeField.selectedIndex].value;
-var minPriceOfType = {
-  'palace': 10000,
-  'house': 5000,
-  'flat': 1000,
-  'bungalo': 0
-};
 
 var timeInField = noticeForm.querySelector('#timein');
 var timeOutField = noticeForm.querySelector('#timeout');
@@ -268,30 +277,9 @@ var timeOutField = noticeForm.querySelector('#timeout');
 var roomNumberField = noticeForm.querySelector('#room_number');
 var capacityField = noticeForm.querySelector('#capacity');
 
-
-function priceRange(type) {
-  var min = 0;
-  var max = 1000000;
-  for (var key in minPriceOfType) {
-    if (minPriceOfType[key] || minPriceOfType[key] === 0) {
-      min = minPriceOfType[key];
-      if (type !== key) {
-        max = minPriceOfType[key];
-      } else {
-        break;
-      }
-    }
-  }
-  return {
-    'min': String(min),
-    'max': String(max)
-  };
-}
-
 function setPriceRange(type) {
-  var range = priceRange(type);
-  priceField.min = range.min;
-  priceField.max = range.max;
+  priceField.min = OFFER_TYPES[type].minPrice;
+  priceField.max = OFFER_TYPES[type].maxPrice;
 }
 
 function disabeledCapacityOptions() {
@@ -360,17 +348,17 @@ function priceFieldValidation() {
   // var type = typeField.options[typeField.selectedIndex].value;
 
   if (priceField.validity.rangeUnderflow) {
-    // priceField.setCustomValidity(OFFER_TYPES[type] + ' обычно стоит дороже');
+    // priceField.setCustomValidity(OFFER_TYPES[type].name + ' обычно стоит дороже');
     return true;
   }
 
   if (priceField.validity.rangeOverflow) {
-    // priceField.setCustomValidity(OFFER_TYPES[type] + ' обычно стоит дешевле');
+    // priceField.setCustomValidity(OFFER_TYPES[type].name + ' обычно стоит дешевле');
     return true;
   }
 
   if (priceField.validity.valueMissing) {
-    // priceField.setCustomValidity(OFFER_TYPES[type] + ' обычно сколько-нибудь стоит');
+    // priceField.setCustomValidity(OFFER_TYPES[type].name + ' обычно сколько-нибудь стоит');
     return true;
   }
   return false;
