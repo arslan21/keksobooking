@@ -2,7 +2,6 @@
 
 (function () {
   var util = window.util;
-  var list = window.list;
 
   var TITLES = [
     'Большая уютная квартира',
@@ -32,6 +31,7 @@
 
 
   function generationHotel() {
+    var list = window.list;
     var hotel = {};
     hotel.author = {};
     hotel.author.avatar = 'img/avatars/user0' + util.getRandomCeil(8) + '.png';

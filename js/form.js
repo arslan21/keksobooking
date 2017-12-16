@@ -3,7 +3,6 @@
 (function () {
   var util = window.util;
   var list = window.list;
-  var form = window.form;
 
   var noticeBlock = document.querySelector('.notice');
   var noticeForm = noticeBlock.querySelector('.notice__form');
@@ -35,6 +34,7 @@
 
   typeField.addEventListener('change', function () {
     var type = typeField.options[typeField.selectedIndex].value;
+    var form = window.form;
     form.setPriceRange(type);
   });
 
@@ -48,6 +48,7 @@
   });
 
   roomNumberField.addEventListener('change', function () {
+    var form = window.form;
     form.disabeledCapacityOptions();
   });
 
