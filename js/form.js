@@ -27,14 +27,6 @@ for (var n = 0; n < noticeFields.length; n++) {
   noticeFields[n].disabled = true;
 }
 
-function activateNotice() {
-  noticeForm.classList.remove('notice__form--disabled');
-  for (var f = 0; f < noticeFields.length; f++) {
-    noticeFields[f].disabled = false;
-  }
-  map.classList.remove('map--faded');
-}
-
 function disabeledCapacityOptions() {
   var roomSelectedValue = roomNumberField.options[roomNumberField.selectedIndex].value;
   var capacityOptions = capacityField.options;

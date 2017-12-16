@@ -1,5 +1,5 @@
 'use strict';
-debugger
+
 var OFFER_TYPES = {
   flat: {
     name: 'Квартира',

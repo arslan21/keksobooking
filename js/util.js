@@ -5,14 +5,15 @@
   var ENTER_KEYCODE = 13;
 
   window.util = {
-    isEnterEvent: function(evt, action) {
+    isEnterEvent: function(evt, action, secondAction, secondParam) {
       if (evt.keyCode === ENTER_KEYCODE) {
-        action();
+        action(evt);
+        secondAction(secondParam)
       }
     },
     isEscEvent: function(evt, action) {
       if (evt.keyCode === ESC_KEYCODE) {
-        action();
+        action(evt);
       }
     },
     getRandomCeil: function (number) {
