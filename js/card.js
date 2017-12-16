@@ -5,8 +5,8 @@
   var mapCard = template.querySelector('.map__card');
   var templateCloseButton = mapCard.querySelector('.popup__close');
 
-
   var map = document.querySelector('.map');
+  var mapPins = map.querySelector('.map__pins');
   var mapFiltersContainer = map.querySelector('.map__filters-container');
 
 
