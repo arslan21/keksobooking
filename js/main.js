@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var hotelList = window.list.getHotelList();
+
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
   var mapPinMain = map.querySelector('.map__pin--main');
@@ -13,7 +15,6 @@
   var typeSelectedValue = typeField.options[typeField.selectedIndex].value;
 
   function insertPins() {
-    var hotelList = window.list.getHotelList();
     var mapPinsLength = mapPins.children.length;
     for (var p = mapPinsLength; p > 0; p--) {
       if (mapPins.children[mapPinsLength - 1].classList === 'map__pin' || mapPins.children[mapPinsLength - 1].classList === 'map__pin map__pin--active') {
