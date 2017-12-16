@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var util = window.util;
+  var list = window.lis
   var list = window.list;
 
   var noticeBlock = document.querySelector('.notice');
@@ -132,6 +132,7 @@
     submitingForm(evt);
   });
   submitForm.addEventListener('keydown', function (evt) {
+    var util = window.util;
     util.isEnterEvent(evt, submitingForm);
   });
 
@@ -169,6 +170,7 @@
     },
 
     setPriceRange: function (type) {
+      var list = window.list;
       var offerTypes = list.OFFER_TYPES;
       priceField.min = offerTypes[type].minPrice;
       priceField.max = offerTypes[type].maxPrice;

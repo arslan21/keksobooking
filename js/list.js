@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var util = window.util;
 
   var TITLES = [
     'Большая уютная квартира',
@@ -31,7 +30,9 @@
 
 
   function generationHotel() {
+    var util = window.util;
     var list = window.list;
+
     var hotel = {};
     hotel.author = {};
     hotel.author.avatar = 'img/avatars/user0' + util.getRandomCeil(8) + '.png';
@@ -56,6 +57,8 @@
   }
 
   function getFeaturesList() {
+    var util = window.util;
+
     var featuresList = [];
     featuresList.length = util.getRandomCeil(FEATURES_LIST.length);
     var existedFeatures = {};

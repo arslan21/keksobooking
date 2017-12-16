@@ -1,9 +1,6 @@
 'use strict';
 
 (function () {
-  var util = window.util;
-  var card = window.card;
-
   var map = document.querySelector('.map');
 
   var template = document.querySelector('template').content;
@@ -23,6 +20,7 @@
 
   window.pin = {
     renderPin: function (hotel) {
+      var card = window.card;
       var mapPin = templatePinButton.cloneNode(true);
       mapPin.setAttribute('style', 'left: ' + (hotel.location.x - 3) + 'px;' + 'top: ' + (hotel.location.y - buttonImage.height) + 'px;');
       mapPin.querySelector('img').setAttribute('src', hotel.author.avatar);
@@ -32,6 +30,7 @@
         card.getMapCard(hotel);
       });
       mapPin.addEventListener('keydown', function (evt) {
+        var util = window.util;
         util.isEnterEvent(evt, activatePin);
       });
       return mapPin;

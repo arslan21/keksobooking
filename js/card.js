@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var util = window.util;
   var list = window.list;
 
   var template = document.querySelector('template').content;
@@ -28,10 +27,12 @@
   }
 
   function escClosePopup(evt) {
+    var util = window.util;
     util.isEscEvent(evt, closePopup);
   }
 
   function enterClosePopup(evt) {
+    var util = window.util;
     util.isEnterEvent(evt, closePopup);
   }
 
@@ -52,6 +53,7 @@
       mapCardForShow.querySelector('small').textContent = hotel.offer.address;
       mapCardForShow.querySelector('.popup__price').textContent = hotel.offer.price + ' \u20BD/ночь';
 
+      var list = window.list;
       var offerTypes = list.OFFER_TYPES;
       mapCardForShow.querySelector('h4').textContent = offerTypes[hotel.offer.type].name;
       mapCardForShow.querySelector('p:nth-of-type(3)').textContent = hotel.offer.rooms + ' комнаты для ' + hotel.offer.guests + ' гостей';
