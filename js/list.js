@@ -1,29 +1,9 @@
 'use strict';
 
-var OFFER_TYPES = {
-  flat: {
-    name: 'Квартира',
-    minPrice: 1000,
-    maxPrice: 1000000
-  },
-  bungalo: {
-    name: 'Бунгало',
-    minPrice: 0,
-    maxPrice: 1000000
-  },
-  house: {
-    name: 'Дом',
-    minPrice: 5000,
-    maxPrice: 1000000
-  },
-  palace: {
-    name: 'Дворец',
-    minPrice: 10000,
-    maxPrice: 1000000
-  }
-};
+(function () {
+  var util = window.util;
+  var list = window.list;
 
-(function() {
   var TITLES = [
     'Большая уютная квартира',
     'Маленькая неуютная квартира',
@@ -62,7 +42,8 @@ var OFFER_TYPES = {
     hotel.offer.address = hotel.location.x + ', ' + hotel.location.y;
     hotel.offer.title = util.getRandomElem(TITLES);
     hotel.offer.price = util.getRandomFloor(10, 10000) * 100;
-    var typesForGeneration = Object.keys(OFFER_TYPES);
+    var types = list.OFFER_TYPES;
+    var typesForGeneration = Object.keys(types);
     hotel.offer.type = util.getRandomElem(typesForGeneration);
     hotel.offer.rooms = util.getRandomCeil(5);
     hotel.offer.guests = util.getRandomCeil(15);
@@ -89,19 +70,42 @@ var OFFER_TYPES = {
     return featuresList;
   }
 
-  function getHotelList() {
-    var hotelList = [];
-    var existedAvatars = {};
-    for (var h = 0; h < 8; h++) {
-      hotelList[h] = generationHotel();
-      if (existedAvatars[hotelList[h].author.avatar] === true) {
-        h--;
-      } else {
-        existedAvatars[hotelList[h].author.avatar] = true;
+  window.list = {
+    getHotelList: function () {
+      var hotelList = [];
+      var existedAvatars = {};
+      for (var h = 0; h < 8; h++) {
+        hotelList[h] = generationHotel();
+        if (existedAvatars[hotelList[h].author.avatar] === true) {
+          h--;
+        } else {
+          existedAvatars[hotelList[h].author.avatar] = true;
+        }
+      }
+      return hotelList;
+    },
+
+    OFFER_TYPES: {
+      flat: {
+        name: 'Квартира',
+        minPrice: 1000,
+        maxPrice: 1000000
+      },
+      bungalo: {
+        name: 'Бунгало',
+        minPrice: 0,
+        maxPrice: 1000000
+      },
+      house: {
+        name: 'Дом',
+        minPrice: 5000,
+        maxPrice: 1000000
+      },
+      palace: {
+        name: 'Дворец',
+        minPrice: 10000,
+        maxPrice: 1000000
       }
     }
-    return hotelList;
-  }
-  window.list = getHotelList()
-  // return window.hotelList
+  };
 })();

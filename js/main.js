@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  var list = window.list;
+  var pin = window.pin;
+  var form = window.form;
+
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
   var mapPinMain = map.querySelector('.map__pin--main');
@@ -12,14 +16,6 @@
   var typeField = noticeForm.querySelector('#type');
   var typeSelectedValue = typeField.options[typeField.selectedIndex].value;
 
-
-  mapPinMain.addEventListener('mouseup', function () {
-    activateNotice();
-    insertPins();
-    form.disabeledCapacityOptions();
-    form.setPriceRange(typeSelectedValue);
-  });
-
   function insertPins() {
     var mapPinsLength = mapPins.children.length;
     for (var p = mapPinsLength; p > 0; p--) {
@@ -29,9 +25,9 @@
       }
     }
     var fragment = document.createDocumentFragment();
-    for (var l = 0; l < window.list.length; l++) {
-      // debugger
-      var pinForInsert = pin.renderPin(window.list[l])
+    var hotelList = list.getHotelList();
+    for (var l = 0; l < hotelList.length; l++) {
+      var pinForInsert = pin.renderPin(hotelList[l]);
       fragment.appendChild(pinForInsert);
     }
     mapPins.appendChild(fragment);
@@ -44,4 +40,11 @@
     }
     map.classList.remove('map--faded');
   }
+
+  mapPinMain.addEventListener('mouseup', function () {
+    activateNotice();
+    insertPins();
+    form.disabeledCapacityOptions();
+    form.setPriceRange(typeSelectedValue);
+  });
 })();

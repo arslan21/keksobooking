@@ -1,5 +1,10 @@
 'use strict';
+
 (function () {
+  var util = window.util;
+  var list = window.list;
+  var form = window.form;
+
   var noticeBlock = document.querySelector('.notice');
   var noticeForm = noticeBlock.querySelector('.notice__form');
   var noticeFields = noticeForm.querySelectorAll('fieldset');
@@ -15,7 +20,6 @@
   priceField.required = true;
 
   var typeField = noticeForm.querySelector('#type');
-  // var typeSelectedValue = typeField.options[typeField.selectedIndex].value;
 
   var timeInField = noticeForm.querySelector('#timein');
   var timeOutField = noticeForm.querySelector('#timeout');
@@ -92,11 +96,11 @@
     return false;
   }
 
-  function  allFieldValidation() {
+  function allFieldValidation() {
     if (titleFieldValidation() || priceFieldValidation() || addressFieldValidation() || capacityFieldValidation()) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 
   //  Маркировка незаполненных полей
@@ -134,7 +138,7 @@
     if (allFieldValidation()) {
       evt.preventDefault();
       invalidFieldsMarking();
-      alert('Заполните отмеченные поля');
+      // alert('Заполните отмеченные поля');
     } else {
       noticeForm.submit();
     }
@@ -164,8 +168,9 @@
     },
 
     setPriceRange: function (type) {
-      priceField.min = OFFER_TYPES[type].minPrice;
-      priceField.max = OFFER_TYPES[type].maxPrice;
+      var offerTypes = list.OFFER_TYPES;
+      priceField.min = offerTypes[type].minPrice;
+      priceField.max = offerTypes[type].maxPrice;
     }
-  }
+  };
 })();
