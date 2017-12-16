@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   var TITLES = [
     'Большая уютная квартира',
     'Маленькая неуютная квартира',
@@ -28,10 +27,8 @@
     '14:00'
   ];
 
-
   function generationHotel() {
     var util = window.util;
-    var list = window.list;
 
     var hotel = {};
     hotel.author = {};
@@ -43,7 +40,7 @@
     hotel.offer.address = hotel.location.x + ', ' + hotel.location.y;
     hotel.offer.title = util.getRandomElem(TITLES);
     hotel.offer.price = util.getRandomFloor(10, 10000) * 100;
-    var types = list.OFFER_TYPES;
+    var types = window.list.OFFER_TYPES;
     var typesForGeneration = Object.keys(types);
     hotel.offer.type = util.getRandomElem(typesForGeneration);
     hotel.offer.rooms = util.getRandomCeil(5);
@@ -57,8 +54,7 @@
   }
 
   function getFeaturesList() {
-    var util = window.util;
-
+    var util = window.util
     var featuresList = [];
     featuresList.length = util.getRandomCeil(FEATURES_LIST.length);
     var existedFeatures = {};

@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
   var mapPinMain = map.querySelector('.map__pin--main');
@@ -14,9 +13,7 @@
   var typeSelectedValue = typeField.options[typeField.selectedIndex].value;
 
   function insertPins() {
-    var pin = window.pin;
-    var list = window.list;
-    var hotelList = list.getHotelList();
+    var hotelList = window.list.getHotelList();
     var mapPinsLength = mapPins.children.length;
     for (var p = mapPinsLength; p > 0; p--) {
       if (mapPins.children[mapPinsLength - 1].classList === 'map__pin' || mapPins.children[mapPinsLength - 1].classList === 'map__pin map__pin--active') {
@@ -41,11 +38,9 @@
   }
 
   mapPinMain.addEventListener('mouseup', function () {
-    var form = window.form;
-
     activateNotice();
     insertPins();
-    form.disabeledCapacityOptions();
-    form.setPriceRange(typeSelectedValue);
+    window.form.disabeledCapacityOptions();
+    window.form.setPriceRange(typeSelectedValue);
   });
 })();

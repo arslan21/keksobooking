@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var list = window.list;
-
   var template = document.querySelector('template').content;
   var mapCard = template.querySelector('.map__card');
   var templateCloseButton = mapCard.querySelector('.popup__close');
@@ -10,7 +8,6 @@
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
   var mapFiltersContainer = map.querySelector('.map__filters-container');
-
 
   function featuresListForPopup(hotel) {
     var featuresListPopup = mapCard.querySelector('.popup__features').cloneNode(true);
@@ -27,13 +24,11 @@
   }
 
   function escClosePopup(evt) {
-    var util = window.util;
-    util.isEscEvent(evt, closePopup);
+    window.util.isEscEvent(evt, closePopup);
   }
 
   function enterClosePopup(evt) {
-    var util = window.util;
-    util.isEnterEvent(evt, closePopup);
+    window.util.isEnterEvent(evt, closePopup);
   }
 
   function closePopup() {
@@ -53,8 +48,7 @@
       mapCardForShow.querySelector('small').textContent = hotel.offer.address;
       mapCardForShow.querySelector('.popup__price').textContent = hotel.offer.price + ' \u20BD/ночь';
 
-      var list = window.list;
-      var offerTypes = list.OFFER_TYPES;
+      var offerTypes = window.list.OFFER_TYPES;
       mapCardForShow.querySelector('h4').textContent = offerTypes[hotel.offer.type].name;
       mapCardForShow.querySelector('p:nth-of-type(3)').textContent = hotel.offer.rooms + ' комнаты для ' + hotel.offer.guests + ' гостей';
       mapCardForShow.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + hotel.offer.checkin + ', выезд до ' + hotel.offer.checkout;

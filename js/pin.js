@@ -20,22 +20,18 @@
 
   window.pin = {
     renderPin: function (hotel) {
-      var card = window.card;
       var mapPin = templatePinButton.cloneNode(true);
       mapPin.setAttribute('style', 'left: ' + (hotel.location.x - 3) + 'px;' + 'top: ' + (hotel.location.y - buttonImage.height) + 'px;');
       mapPin.querySelector('img').setAttribute('src', hotel.author.avatar);
 
       mapPin.addEventListener('click', function (evt) {
         activatePin(evt);
-        card.getMapCard(hotel);
+        window.card.getMapCard(hotel);
       });
       mapPin.addEventListener('keydown', function (evt) {
-        var util = window.util;
-        util.isEnterEvent(evt, activatePin);
+        window.util.isEnterEvent(evt, activatePin);
       });
       return mapPin;
-    },
-
+    }
   };
-
 })();

@@ -1,9 +1,6 @@
 'use strict';
 
 (function () {
-  var list = window.lis
-  var list = window.list;
-
   var noticeBlock = document.querySelector('.notice');
   var noticeForm = noticeBlock.querySelector('.notice__form');
   var noticeFields = noticeForm.querySelectorAll('fieldset');
@@ -34,8 +31,7 @@
 
   typeField.addEventListener('change', function () {
     var type = typeField.options[typeField.selectedIndex].value;
-    var form = window.form;
-    form.setPriceRange(type);
+    window.form.setPriceRange(type);
   });
 
   timeInField.addEventListener('change', function () {
@@ -48,8 +44,7 @@
   });
 
   roomNumberField.addEventListener('change', function () {
-    var form = window.form;
-    form.disabeledCapacityOptions();
+    window.form.disabeledCapacityOptions();
   });
 
   // Валидация полей
@@ -132,8 +127,7 @@
     submitingForm(evt);
   });
   submitForm.addEventListener('keydown', function (evt) {
-    var util = window.util;
-    util.isEnterEvent(evt, submitingForm);
+    window.util.isEnterEvent(evt, submitingForm);
   });
 
   function submitingForm(evt) {
@@ -170,8 +164,7 @@
     },
 
     setPriceRange: function (type) {
-      var list = window.list;
-      var offerTypes = list.OFFER_TYPES;
+      var offerTypes = window.list.OFFER_TYPES;
       priceField.min = offerTypes[type].minPrice;
       priceField.max = offerTypes[type].maxPrice;
     }
