@@ -54,7 +54,7 @@
   }
 
   function getFeaturesList() {
-    var util = window.util
+    var util = window.util;
     var featuresList = [];
     featuresList.length = util.getRandomCeil(FEATURES_LIST.length);
     var existedFeatures = {};
