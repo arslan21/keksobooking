@@ -48,7 +48,7 @@
       mapCardForShow.querySelector('small').textContent = hotel.offer.address;
       mapCardForShow.querySelector('.popup__price').textContent = hotel.offer.price + ' \u20BD/ночь';
 
-      var offerTypes = window.list.OFFER_TYPES;
+      var offerTypes = window.data.OFFER_TYPES;
       mapCardForShow.querySelector('h4').textContent = offerTypes[hotel.offer.type].name;
       mapCardForShow.querySelector('p:nth-of-type(3)').textContent = hotel.offer.rooms + ' комнаты для ' + hotel.offer.guests + ' гостей';
       mapCardForShow.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + hotel.offer.checkin + ', выезд до ' + hotel.offer.checkout;

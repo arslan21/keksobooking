@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var hotelList = window.list.getHotelList();
+  var hotelList = window.data.getHotelList();
 
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');

@@ -162,7 +162,7 @@
     },
 
     setPriceRange: function (type) {
-      var offerTypes = window.list.OFFER_TYPES;
+      var offerTypes = window.data.OFFER_TYPES;
       priceField.min = offerTypes[type].minPrice;
       priceField.max = offerTypes[type].maxPrice;
     }

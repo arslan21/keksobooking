@@ -40,7 +40,7 @@
     hotel.offer.address = hotel.location.x + ', ' + hotel.location.y;
     hotel.offer.title = util.getRandomElem(TITLES);
     hotel.offer.price = util.getRandomFloor(10, 10000) * 100;
-    var types = window.list.OFFER_TYPES;
+    var types = window.data.OFFER_TYPES;
     var typesForGeneration = Object.keys(types);
     hotel.offer.type = util.getRandomElem(typesForGeneration);
     hotel.offer.rooms = util.getRandomCeil(5);
@@ -69,7 +69,7 @@
     return featuresList;
   }
 
-  window.list = {
+  window.data = {
     getHotelList: function () {
       var hotelList = [];
       var existedAvatars = {};
