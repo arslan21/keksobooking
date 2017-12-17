@@ -6,46 +6,44 @@
   var noticeFields = noticeForm.querySelectorAll('fieldset');
 
   var addressField = noticeForm.querySelector('#address');
-  addressField.required = true;
-  addressField.disabled = true;
-
   var titleField = noticeForm.querySelector('#title');
-  titleField.required = true;
-
   var priceField = noticeForm.querySelector('#price');
-  priceField.required = true;
-
   var typeField = noticeForm.querySelector('#type');
-
   var timeInField = noticeForm.querySelector('#timein');
   var timeOutField = noticeForm.querySelector('#timeout');
-
   var roomNumberField = noticeForm.querySelector('#room_number');
   var capacityField = noticeForm.querySelector('#capacity');
 
   var submitForm = noticeForm.querySelector('.form__submit');
 
-  for (var n = 0; n < noticeFields.length; n++) {
-    noticeFields[n].disabled = true;
-  }
+    (function initFields() {
+      addressField.required = true;
+      addressField.disabled = true;
+      titleField.required = true;
+      priceField.required = true;
 
-  typeField.addEventListener('change', function () {
-    var type = typeField.options[typeField.selectedIndex].value;
-    window.form.setPriceRange(type);
-  });
+      for (var n = 0; n < noticeFields.length; n++) {
+        noticeFields[n].disabled = true;
+      }
 
-  timeInField.addEventListener('change', function () {
-    var index = timeInField.selectedIndex;
-    timeOutField.selectedIndex = index;
-  });
-  timeOutField.addEventListener('change', function () {
-    var index = timeOutField.selectedIndex;
-    timeInField.selectedIndex = index;
-  });
+      typeField.addEventListener('change', function () {
+        var type = typeField.options[typeField.selectedIndex].value;
+        window.form.setPriceRange(type);
+      });
 
-  roomNumberField.addEventListener('change', function () {
-    window.form.disabeledCapacityOptions();
-  });
+      timeInField.addEventListener('change', function () {
+        var index = timeInField.selectedIndex;
+        timeOutField.selectedIndex = index;
+      });
+      timeOutField.addEventListener('change', function () {
+        var index = timeOutField.selectedIndex;
+        timeInField.selectedIndex = index;
+      });
+
+      roomNumberField.addEventListener('change', function () {
+        window.form.disabeledCapacityOptions();
+      });
+    })();
 
   // Валидация полей
   function titleFieldValidation() {
@@ -168,5 +166,7 @@
       priceField.min = offerTypes[type].minPrice;
       priceField.max = offerTypes[type].maxPrice;
     }
+
+
   };
 })();
