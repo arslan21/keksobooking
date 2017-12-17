@@ -38,10 +38,15 @@
     map.classList.remove('map--faded');
   }
 
-  mapPinMain.addEventListener('mouseup', function () {
+  function locateNotice() {
     activateNotice();
     insertPins();
     window.form.disabeledCapacityOptions();
     window.form.setPriceRange(typeSelectedValue);
-  });
+  }
+
+  (function activatePinMain() {
+    mapPinMain.addEventListener('mouseup', locateNotice);
+  })();
+
 })();
