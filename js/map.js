@@ -14,6 +14,8 @@
   var typeField = noticeForm.querySelector('#type');
   var typeSelectedValue = typeField.options[typeField.selectedIndex].value;
 
+  var addressField = noticeForm.querySelector('#address');
+
   function insertPins() {
     var mapPinsLength = mapPins.children.length;
     for (var p = mapPinsLength; p > 0; p--) {
@@ -38,16 +40,34 @@
     map.classList.remove('map--faded');
   }
 
-  function locateNotice() {
+  function getAddress(evt) {
+    var pinStyle = getComputedStyle(evt.currentTarget);
+    var afterPinStyle = getComputedStyle(evt.currentTarget, '::after');
+
+    var pinStyeLeft = parseInt(pinStyle.left, 10);
+    var pinStyeTop = parseInt(pinStyle.top, 10);
+    var pinStyeHeight = parseInt(pinStyle.height, 10);
+    var afterPinStyeHeight = parseInt(afterPinStyle.borderTopWidth, 10);
+
+    var mapPinMainX = pinStyeLeft;
+    var mapPinMainY = pinStyeTop + (pinStyeHeight + afterPinStyeHeight) / 2;
+
+    addressField.value = 'x: ' + mapPinMainX + ', y: ' + mapPinMainY;
+    addressField.disabled = false;
+    addressField.readOnly = true;
+  }
+
+  function locateNotice(evt) {
     activateNotice();
     insertPins();
+    getAddress(evt);
     window.form.disabeledCapacityOptions();
     window.form.setPriceRange(typeSelectedValue);
   }
 
 
   window.form.initFields();
-  mapPinMain.addEventListener('mouseup', function () {
-    locateNotice()
+  mapPinMain.addEventListener('mouseup', function (evt) {
+    locateNotice(evt);
   });
 })();
