@@ -45,8 +45,9 @@
     window.form.setPriceRange(typeSelectedValue);
   }
 
-  (function activatePinMain() {
-    mapPinMain.addEventListener('mouseup', locateNotice);
-  })();
 
+  window.form.initFields();
+  mapPinMain.addEventListener('mouseup', function () {
+    locateNotice()
+  });
 })();

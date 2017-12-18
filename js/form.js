@@ -16,35 +16,6 @@
 
   var submitForm = noticeForm.querySelector('.form__submit');
 
-    (function initFields() {
-      addressField.required = true;
-      addressField.disabled = true;
-      titleField.required = true;
-      priceField.required = true;
-
-      for (var n = 0; n < noticeFields.length; n++) {
-        noticeFields[n].disabled = true;
-      }
-
-      typeField.addEventListener('change', function () {
-        var type = typeField.options[typeField.selectedIndex].value;
-        window.form.setPriceRange(type);
-      });
-
-      timeInField.addEventListener('change', function () {
-        var index = timeInField.selectedIndex;
-        timeOutField.selectedIndex = index;
-      });
-      timeOutField.addEventListener('change', function () {
-        var index = timeOutField.selectedIndex;
-        timeInField.selectedIndex = index;
-      });
-
-      roomNumberField.addEventListener('change', function () {
-        window.form.disabeledCapacityOptions();
-      });
-    })();
-
   // Валидация полей
   function titleFieldValidation() {
     if (titleField.validity.tooShort) {
@@ -165,8 +136,36 @@
       var offerTypes = window.data.OFFER_TYPES;
       priceField.min = offerTypes[type].minPrice;
       priceField.max = offerTypes[type].maxPrice;
-    }
+    },
 
+    initFields: function () {
+      addressField.required = true;
+      addressField.disabled = true;
+      titleField.required = true;
+      priceField.required = true;
+
+      for (var n = 0; n < noticeFields.length; n++) {
+        noticeFields[n].disabled = true;
+      }
+
+      typeField.addEventListener('change', function () {
+        var type = typeField.options[typeField.selectedIndex].value;
+        window.form.setPriceRange(type);
+      });
+
+      timeInField.addEventListener('change', function () {
+        var index = timeInField.selectedIndex;
+        timeOutField.selectedIndex = index;
+      });
+      timeOutField.addEventListener('change', function () {
+        var index = timeOutField.selectedIndex;
+        timeInField.selectedIndex = index;
+      });
+
+      roomNumberField.addEventListener('change', function () {
+        window.form.disabeledCapacityOptions();
+      });
+    }
 
   };
 })();
