@@ -110,6 +110,13 @@
   }
 
   window.form = {
+    activateNotice: function () {
+      noticeForm.classList.remove('notice__form--disabled');
+      for (var f = 0; f < noticeFields.length; f++) {
+        noticeFields[f].disabled = false;
+      }
+    },
+
     disabeledCapacityOptions: function () {
       var roomSelectedValue = roomNumberField.options[roomNumberField.selectedIndex].value;
       var capacityOptions = capacityField.options;
@@ -132,7 +139,8 @@
       }
     },
 
-    setPriceRange: function (type) {
+    setPriceRange: function () {
+      var type = typeField.options[typeField.selectedIndex].value;
       var offerTypes = window.data.OFFER_TYPES;
       priceField.min = offerTypes[type].minPrice;
       priceField.max = offerTypes[type].maxPrice;
@@ -165,6 +173,13 @@
       roomNumberField.addEventListener('change', function () {
         window.form.disabeledCapacityOptions();
       });
+    },
+
+    setAddress: function (address) {
+      addressField.value = address;
+
+      addressField.disabled = false;
+      addressField.readOnly = true;
     }
 
   };
