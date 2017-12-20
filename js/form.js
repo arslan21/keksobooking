@@ -9,8 +9,8 @@
   var titleField = noticeForm.querySelector('#title');
   var priceField = noticeForm.querySelector('#price');
   var typeField = noticeForm.querySelector('#type');
-  var timeInField = noticeForm.querySelector('#timein');
-  var timeOutField = noticeForm.querySelector('#timeout');
+  var checkInField = noticeForm.querySelector('#timein');
+  var checkOutField = noticeForm.querySelector('#timeout');
   var roomNumberField = noticeForm.querySelector('#room_number');
   var capacityField = noticeForm.querySelector('#capacity');
 
@@ -168,14 +168,14 @@
         window.form.setPriceRange();
       });
 
-      var timeInValues = window.util.getValuesFromOptions(timeInField);
-      var timeOutValues = window.util.getValuesFromOptions(timeOutField);
+      var checkInValues = window.util.getValuesFromOptions(checkInField);
+      var checkOutValues = window.util.getValuesFromOptions(checkOutField);
 
-      timeInField.addEventListener('change', function () {
-        window.synchronizeFields(timeInField, timeOutField, timeInValues, timeOutValues, window.syncValues);
+      checkInField.addEventListener('change', function () {
+        window.synchronizeFields(checkInField, checkOutField, checkInValues, checkOutValues, window.syncValues);
       });
-      timeOutField.addEventListener('change', function () {
-        window.synchronizeFields(timeOutField, timeInField, timeInValues, timeOutValues, window.syncValues);
+      checkOutField.addEventListener('change', function () {
+        window.synchronizeFields(checkOutField, checkInField, checkInValues, checkOutValues, window.syncValues);
       });
 
       roomNumberField.addEventListener('change', function () {
