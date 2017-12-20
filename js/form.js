@@ -140,10 +140,18 @@
     },
 
     setPriceRange: function () {
-      var type = typeField.options[typeField.selectedIndex].value;
+      var typeValues = [];
+      var minPrices = [];
+      var maxPrices = [];
       var offerTypes = window.data.OFFER_TYPES;
-      priceField.min = offerTypes[type].minPrice;
-      priceField.max = offerTypes[type].maxPrice;
+      for (var i = 0; i < typeField.options.length; i++) {
+        typeValues[i] = typeField.options[i].value;
+        minPrices[i] = offerTypes[typeValues[i]].minPrice;
+        maxPrices[i] = offerTypes[typeValues[i]].maxPrice;
+      }
+
+      window.synchronizeFields(typeField, priceField, typeValues, minPrices, window.syncValuesMin);
+      window.synchronizeFields(typeField, priceField, typeValues, maxPrices, window.syncValuesMax);
     },
 
     initFields: function () {
@@ -157,17 +165,17 @@
       }
 
       typeField.addEventListener('change', function () {
-        var type = typeField.options[typeField.selectedIndex].value;
-        window.form.setPriceRange(type);
+        window.form.setPriceRange();
       });
 
+      var timeInValues = window.util.getValuesFromOptions(timeInField);
+      var timeOutValues = window.util.getValuesFromOptions(timeOutField);
+
       timeInField.addEventListener('change', function () {
-        var index = timeInField.selectedIndex;
-        timeOutField.selectedIndex = index;
+        window.synchronizeFields(timeInField, timeOutField, timeInValues, timeOutValues, window.syncValues);
       });
       timeOutField.addEventListener('change', function () {
-        var index = timeOutField.selectedIndex;
-        timeInField.selectedIndex = index;
+        window.synchronizeFields(timeOutField, timeInField, timeInValues, timeOutValues, window.syncValues);
       });
 
       roomNumberField.addEventListener('change', function () {
