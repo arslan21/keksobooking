@@ -9,7 +9,6 @@
       window.form.activateNotice();
       window.form.setAddress(address);
       window.form.disabeledCapacityOptions();
-      window.form.setPriceRange();
     }
   };
 })();

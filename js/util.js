@@ -10,19 +10,32 @@
         action(evt);
       }
     },
+
     isEscEvent: function (evt, action) {
       if (evt.keyCode === ESC_KEYCODE) {
         action(evt);
       }
     },
+
     getRandomCeil: function (number) {
       return Math.ceil(Math.random() * number);
     },
+
     getRandomFloor: function (minNumber, maxNumber) {
       return Math.floor(minNumber + Math.random() * (maxNumber + 1 - minNumber));
     },
+
     getRandomElem: function (array) {
       return array[Math.floor(Math.random() * array.length)];
+    },
+
+    getValuesFromOptions: function (selectField) {
+      var optionsValues = [];
+      for (var i = 0; i < selectField.options.length; i++) {
+        optionsValues[i] = selectField.options[i].value;
+      }
+      return optionsValues;
     }
+
   };
 })();

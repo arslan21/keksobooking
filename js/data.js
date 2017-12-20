@@ -88,22 +88,18 @@
       flat: {
         name: 'Квартира',
         minPrice: 1000,
-        maxPrice: 1000000
       },
       bungalo: {
         name: 'Бунгало',
         minPrice: 0,
-        maxPrice: 1000000
       },
       house: {
         name: 'Дом',
         minPrice: 5000,
-        maxPrice: 1000000
       },
       palace: {
         name: 'Дворец',
         minPrice: 10000,
-        maxPrice: 1000000
       }
     }
   };
