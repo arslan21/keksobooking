@@ -161,7 +161,7 @@
       var checkInValues = window.util.getValuesFromOptions(checkInField);
       var checkOutValues = window.util.getValuesFromOptions(checkOutField);
       window.synchronizeFields(checkInField, checkOutField, checkInValues, checkOutValues, window.syncValues);
-      window.synchronizeFields(checkOutField, checkInField, checkInValues, checkOutValues, window.syncValues);
+      window.synchronizeFields(checkOutField, checkInField, checkOutValues, checkInValues, window.syncValues);
 
       roomNumberField.addEventListener('change', function () {
         window.form.disabeledCapacityOptions();
