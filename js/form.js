@@ -139,21 +139,6 @@
       }
     },
 
-    setPriceRange: function () {
-      var typeValues = [];
-      var minPrices = [];
-      var maxPrices = [];
-      var offerTypes = window.data.OFFER_TYPES;
-      for (var i = 0; i < typeField.options.length; i++) {
-        typeValues[i] = typeField.options[i].value;
-        minPrices[i] = offerTypes[typeValues[i]].minPrice;
-        maxPrices[i] = offerTypes[typeValues[i]].maxPrice;
-      }
-
-      window.synchronizeFields(typeField, priceField, typeValues, minPrices, window.syncValuesMin);
-      window.synchronizeFields(typeField, priceField, typeValues, maxPrices, window.syncValuesMax);
-    },
-
     initFields: function () {
       addressField.required = true;
       addressField.disabled = true;
@@ -164,19 +149,19 @@
         noticeFields[n].disabled = true;
       }
 
-      typeField.addEventListener('change', function () {
-        window.form.setPriceRange();
-      });
+      var typeValues = [];
+      var minPrices = [];
+      var offerTypes = window.data.OFFER_TYPES;
+      for (var i = 0; i < typeField.options.length; i++) {
+        typeValues[i] = typeField.options[i].value;
+        minPrices[i] = offerTypes[typeValues[i]].minPrice;
+      }
+      window.synchronizeFields(typeField, priceField, typeValues, minPrices, window.syncValuesMin);
 
       var checkInValues = window.util.getValuesFromOptions(checkInField);
       var checkOutValues = window.util.getValuesFromOptions(checkOutField);
-
-      checkInField.addEventListener('change', function () {
-        window.synchronizeFields(checkInField, checkOutField, checkInValues, checkOutValues, window.syncValues);
-      });
-      checkOutField.addEventListener('change', function () {
-        window.synchronizeFields(checkOutField, checkInField, checkInValues, checkOutValues, window.syncValues);
-      });
+      window.synchronizeFields(checkInField, checkOutField, checkInValues, checkOutValues, window.syncValues);
+      window.synchronizeFields(checkOutField, checkInField, checkInValues, checkOutValues, window.syncValues);
 
       roomNumberField.addEventListener('change', function () {
         window.form.disabeledCapacityOptions();

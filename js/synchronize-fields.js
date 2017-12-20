@@ -13,13 +13,15 @@
     syncElement.max = syncValue;
   };
 
-  window.synchronizeFields = function (element, SyncElement, valuesArr, syncValuesArr, callback) {
-    var syncValuesObj = {};
-    for (var i = 0; i < valuesArr.length; i++) {
-      syncValuesObj[valuesArr[i]] = syncValuesArr[i];
-    }
-    var value = element.value;
-    var syncValue = syncValuesObj[value];
-    callback(SyncElement, syncValue);
+  window.synchronizeFields = function (element, syncElement, valuesArr, syncValuesArr, callback) {
+    element.addEventListener('change', function () {
+      var syncValuesObj = {};
+      for (var i = 0; i < valuesArr.length; i++) {
+        syncValuesObj[valuesArr[i]] = syncValuesArr[i];
+      }
+      var value = element.value;
+      var syncValue = syncValuesObj[value];
+      callback(syncElement, syncValue);
+    })
   };
 })();
