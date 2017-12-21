@@ -8,13 +8,7 @@
   var mapPinMain = map.querySelector('.map__pin--main');
 
   function insertPins() {
-    var mapPinsLength = mapPins.children.length;
-    for (var p = mapPinsLength; p > 0; p--) {
-      if (mapPins.children[mapPinsLength - 1].classList === 'map__pin' || mapPins.children[mapPinsLength - 1].classList === 'map__pin map__pin--active') {
-        mapPins.children[mapPinsLength - 1].remove();
-        mapPinsLength--;
-      }
-    }
+    window.map.removePins();
     var fragment = document.createDocumentFragment();
     for (var l = 0; l < hotelList.length; l++) {
       var pinForInsert = window.pin.renderPin(hotelList[l]);
@@ -46,6 +40,18 @@
         insertPins();
         window.controller.placeNotice(evt, getAddress(evt));
       });
+    },
+
+    removePins: function () {
+      var mapPinsLength = mapPins.children.length;
+      for (var p = mapPinsLength; p > 0; p--) {
+        var pinClassList = mapPins.children[mapPinsLength - 1].classList.value
+        if (pinClassList === 'map__pin' || pinClassList === 'map__pin map__pin--active') {
+          mapPins.children[mapPinsLength - 1].remove();
+          mapPinsLength--;
+        }
+      }
     }
+
   };
 })();
