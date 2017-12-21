@@ -91,7 +91,7 @@
     invalidFieldBordering(capacityFieldValidityState, capacityField);
   }
 
-  //  отправка формы
+  //  проверка отправки формы
   submitForm.addEventListener('click', function (evt) {
     submitingForm(evt);
   });
@@ -103,10 +103,19 @@
     if (allFieldValidation()) {
       evt.preventDefault();
       invalidFieldsMarking();
-      // alert('Заполните отмеченные поля');
-    } else {
-      noticeForm.submit();
     }
+  }
+  /// отправка формы
+  noticeForm.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(noticeForm), resetNotice)
+    evt.preventDefault();
+  })
+
+  function resetNotice() {
+    noticeForm.reset();
+    noticeForm.classList.add('notice__form--disabled');
+    window.map.removePins();
+    window.map.mapFaded
   }
 
   window.form = {
