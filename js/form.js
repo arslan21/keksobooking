@@ -114,6 +114,7 @@
   function resetNotice() {
     noticeForm.reset();
     noticeForm.classList.add('notice__form--disabled');
+    window.card.closePopup()
     window.map.removePins();
     window.map.mapFaded
   }
