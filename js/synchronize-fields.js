@@ -9,10 +9,6 @@
     syncElement.min = syncValue;
   };
 
-  window.syncValuesMax = function (syncElement, syncValue) {
-    syncElement.max = syncValue;
-  };
-
   window.synchronizeFields = function (element, syncElement, valuesArr, syncValuesArr, callback) {
     element.addEventListener('change', function () {
       var syncValuesObj = {};
@@ -22,6 +18,6 @@
       var value = element.value;
       var syncValue = syncValuesObj[value];
       callback(syncElement, syncValue);
-    })
+    });
   };
 })();

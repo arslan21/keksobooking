@@ -16,6 +16,13 @@
 
   var submitForm = noticeForm.querySelector('.form__submit');
 
+  function deactivateNotice() {
+    noticeForm.classList.remove('notice__form--disabled');
+    for (var f = 0; f < noticeFields.length; f++) {
+      noticeFields[f].disabled = true;
+    }
+  }
+
   // Валидация полей
   function titleFieldValidation() {
     if (titleField.validity.tooShort) {
@@ -91,7 +98,7 @@
     invalidFieldBordering(capacityFieldValidityState, capacityField);
   }
 
-  //  отправка формы
+  //  проверка отправки формы
   submitForm.addEventListener('click', function (evt) {
     submitingForm(evt);
   });
@@ -103,10 +110,21 @@
     if (allFieldValidation()) {
       evt.preventDefault();
       invalidFieldsMarking();
-      // alert('Заполните отмеченные поля');
-    } else {
-      noticeForm.submit();
     }
+  }
+  // отправка формы
+  noticeForm.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(noticeForm), resetNotice, window.errorMessage);
+    evt.preventDefault();
+  });
+
+  function resetNotice() {
+    noticeForm.reset();
+    noticeForm.classList.add('notice__form--disabled');
+    deactivateNotice();
+    window.card.closePopup();
+    window.map.removePins();
+    window.map.mapFaded();
   }
 
   window.form = {
@@ -161,7 +179,7 @@
       var checkInValues = window.util.getValuesFromOptions(checkInField);
       var checkOutValues = window.util.getValuesFromOptions(checkOutField);
       window.synchronizeFields(checkInField, checkOutField, checkInValues, checkOutValues, window.syncValues);
-      window.synchronizeFields(checkOutField, checkInField, checkInValues, checkOutValues, window.syncValues);
+      window.synchronizeFields(checkOutField, checkInField, checkOutValues, checkInValues, window.syncValues);
 
       roomNumberField.addEventListener('change', function () {
         window.form.disabeledCapacityOptions();
