@@ -1,33 +1,19 @@
 'use strict';
 
 (function () {
-  // var hotelList = window.data.getHotelList();
-
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
   var mapPinMain = map.querySelector('.map__pin--main');
 
-  // function insertPins() {
-  //   window.map.removePins();
-  //   var fragment = document.createDocumentFragment();
-  //   for (var i = 0; i < hotelList.length; i++) {
-  //     var pinForInsert = window.pin.renderPin(hotelList[i]);
-  //     fragment.appendChild(pinForInsert);
-  //   }
-  //   mapPins.appendChild(fragment);
-  // }
-    function insertPins(hotelList) {
-      window.map.removePins();
-      console.log(hotelList);
-      var fragment = document.createDocumentFragment();
-      for (var i = 0; i < hotelList.length; i++) {
-        var pinForInsert = window.pin.renderPin(hotelList[i]);
-        fragment.appendChild(pinForInsert);
-      }
-      mapPins.appendChild(fragment);
+  function insertPins(hotelList) {
+    window.map.removePins();
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < hotelList.length; i++) {
+      var pinForInsert = window.pin.renderPin(hotelList[i]);
+      fragment.appendChild(pinForInsert);
     }
-
-
+    mapPins.appendChild(fragment);
+  }
 
   function getAddress(evt) {
     var pinStyle = getComputedStyle(evt.currentTarget);
@@ -49,7 +35,7 @@
     initialize: function () {
       mapPinMain.addEventListener('mouseup', function (evt) {
         map.classList.remove('map--faded');
-        window.backend.load(insertPins);
+        window.backend.load(insertPins, window.errorMessage);
         window.controller.placeNotice(evt, getAddress(evt));
       });
     },
@@ -57,7 +43,7 @@
     removePins: function () {
       var mapPinsLength = mapPins.children.length;
       for (var p = mapPinsLength; p > 0; p--) {
-        var pinClassList = mapPins.children[mapPinsLength - 1].classList.value
+        var pinClassList = mapPins.children[mapPinsLength - 1].classList.value;
         if (pinClassList === 'map__pin' || pinClassList === 'map__pin map__pin--active') {
           mapPins.children[mapPinsLength - 1].remove();
           mapPinsLength--;

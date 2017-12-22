@@ -9,7 +9,7 @@
   var mapPins = map.querySelector('.map__pins');
   var mapFiltersContainer = map.querySelector('.map__filters-container');
 
-  function featuresListForPopup(hotel) {
+  function getFeaturesListForPopup(hotel) {
     var featuresListPopup = mapCard.querySelector('.popup__features').cloneNode(true);
     var featuresListAll = featuresListPopup.querySelectorAll('.feature');
     for (var k = 0; k < featuresListAll.length; k++) {
@@ -45,7 +45,7 @@
       mapCardForShow.querySelector('p:nth-of-type(3)').textContent = hotel.offer.rooms + ' комнаты для ' + hotel.offer.guests + ' гостей';
       mapCardForShow.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + hotel.offer.checkin + ', выезд до ' + hotel.offer.checkout;
 
-      var featuresListPopup = featuresListForPopup(hotel);
+      var featuresListPopup = getFeaturesListForPopup(hotel);
       mapCardForShow.replaceChild(featuresListPopup, mapCardForShow.querySelector('.popup__features'));
 
       mapCardForShow.querySelector('p:nth-of-type(5)').textContent = hotel.offer.description;
@@ -59,7 +59,7 @@
       map.insertBefore(mapCardForShow, mapFiltersContainer);
     },
 
-    closePopup: function() {
+    closePopup: function () {
       templateCloseButton.removeEventListener('keydown', enterClosePopup);
       templateCloseButton.removeEventListener('click', window.card.closePopup);
       if (map.querySelector('.popup')) {

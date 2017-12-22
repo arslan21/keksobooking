@@ -105,18 +105,18 @@
       invalidFieldsMarking();
     }
   }
-  /// отправка формы
+  // отправка формы
   noticeForm.addEventListener('submit', function (evt) {
-    window.backend.save(new FormData(noticeForm), resetNotice)
+    window.backend.save(new FormData(noticeForm), resetNotice, window.errorMessage);
     evt.preventDefault();
-  })
+  });
 
   function resetNotice() {
     noticeForm.reset();
     noticeForm.classList.add('notice__form--disabled');
-    window.card.closePopup()
+    window.card.closePopup();
     window.map.removePins();
-    window.map.mapFaded
+    window.map.mapFaded();
   }
 
   window.form = {

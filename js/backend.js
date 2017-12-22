@@ -18,7 +18,7 @@
       onError('Произошла ошибка соединения');
     });
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError('Запрос не успел cвыполниться за ' + xhr.timeout + 'мс');
     });
     xhr.timeout = 10000;
 
@@ -28,15 +28,15 @@
   window.backend = {
     load: function (onLoad, onError) {
       var xhr = setup(onLoad, onError);
-      xhr.open('GET', LOAD_URL)
+      xhr.open('GET', LOAD_URL);
       xhr.send();
     },
 
     save: function (data, onLoad, onError) {
       var xhr = setup(onLoad, onError);
       xhr.open('POST', SAVE_URL);
-      xhr.send(data)
+      xhr.send(data);
     }
-  }
+  };
 
 })();
