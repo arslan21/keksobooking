@@ -16,6 +16,13 @@
 
   var submitForm = noticeForm.querySelector('.form__submit');
 
+  function deactivateNotice() {
+    noticeForm.classList.remove('notice__form--disabled');
+    for (var f = 0; f < noticeFields.length; f++) {
+      noticeFields[f].disabled = true;
+    }
+  }
+
   // Валидация полей
   function titleFieldValidation() {
     if (titleField.validity.tooShort) {
@@ -114,6 +121,7 @@
   function resetNotice() {
     noticeForm.reset();
     noticeForm.classList.add('notice__form--disabled');
+    deactivateNotice();
     window.card.closePopup();
     window.map.removePins();
     window.map.mapFaded();
