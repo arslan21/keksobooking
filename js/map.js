@@ -35,7 +35,9 @@
     initialize: function () {
       mapPinMain.addEventListener('mouseup', function (evt) {
         map.classList.remove('map--faded');
-        window.backend.load(insertPins, window.errorMessage);
+        window.filter.sorting(window.backend.data);
+        var hotelList = window.filter.sortedHotels;
+        insertPins(hotelList);
         window.controller.placeNotice(evt, getAddress(evt));
       });
     },

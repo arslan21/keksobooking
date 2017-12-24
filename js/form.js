@@ -191,6 +191,17 @@
 
       addressField.disabled = false;
       addressField.readOnly = true;
+    },
+
+    noticeHotel: function () {
+      var myHotel = {};
+
+      myHotel.offer = {};
+      myHotel.offer.price = priceField.value;
+      myHotel.offer.type = typeField.options[capacityField.selectedIndex].value;
+      myHotel.offer.rooms = roomNumberField.options[capacityField.selectedIndex].value;
+      myHotel.offer.guests = capacityField.options[capacityField.selectedIndex].value;
+      return myHotel;
     }
 
   };
