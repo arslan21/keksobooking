@@ -67,6 +67,15 @@
     };
   }
 
+  function debounce () {
+    var prevTimer;
+    window.clearTimeout(prevTimer);
+    prevTimer = window.setTimeout(function () {
+      window.filter.sorting(window.backend.data)
+      window.map.insertPins();
+    }, 500)
+  }
+
   window.filter = {
     sortHotels: function () {
       window.filter.sortedHotels = [];
@@ -74,21 +83,14 @@
 
     active: function () {
       for (var i = 0; i < mapFilters.length; i++) {
-        mapFilters[i].addEventListener('change', function () {
-          window.filter.sorting(window.backend.data)
-          window.map.insertPins();
-        });
+        mapFilters[i].addEventListener('change', debounce);
       }
       for (var i = 0; i < mapChekboxes.length; i++) {
-        mapChekboxes[i].addEventListener('change', function () {
-          window.filter.sorting(window.backend.data)
-          window.map.insertPins();
-        });
+        mapChekboxes[i].addEventListener('change', debounce);
       }
     },
 
     sorting: function (hotelList) {
-      debugger
       var needHotel = getNeedHotel();
       var needHotelOffer = needHotel.offer;
       var sortedHotels = [];
