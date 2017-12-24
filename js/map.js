@@ -5,15 +5,6 @@
   var mapPins = map.querySelector('.map__pins');
   var mapPinMain = map.querySelector('.map__pin--main');
 
-  function insertPins(hotelList) {
-    window.map.removePins();
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < hotelList.length; i++) {
-      var pinForInsert = window.pin.renderPin(hotelList[i]);
-      fragment.appendChild(pinForInsert);
-    }
-    mapPins.appendChild(fragment);
-  }
 
   function getAddress(evt) {
     var pinStyle = getComputedStyle(evt.currentTarget);
@@ -36,10 +27,25 @@
       mapPinMain.addEventListener('mouseup', function (evt) {
         map.classList.remove('map--faded');
         window.filter.sorting(window.backend.data);
-        var hotelList = window.filter.sortedHotels;
-        insertPins(hotelList);
+        // var hotelList = window.filter.sortedHotels;
+        window.map.insertPins();
         window.controller.placeNotice(evt, getAddress(evt));
+        window.filter.active();
       });
+    },
+
+    insertPins: function () {
+      window.map.removePins();
+      var hotelList = window.filter.sortedHotels;
+      var fragment = document.createDocumentFragment();
+      for (var i = 0; i < hotelList.length; i++) {
+        var pinForInsert = window.pin.renderPin(hotelList[i]);
+        fragment.appendChild(pinForInsert);
+        if (i === 4) {
+          break
+        }
+      }
+      mapPins.appendChild(fragment);
     },
 
     removePins: function () {

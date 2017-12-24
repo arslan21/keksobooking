@@ -5,6 +5,7 @@
   var mapPins = mapmap.querySelector('.map__pins');
   var mapFiltersContainer = mapmap.querySelector('.map__filters-container');
   var mapFilters = mapFiltersContainer.querySelectorAll('.map__filters');
+  var mapChekboxes = mapFiltersContainer.querySelectorAll('input')
 
   var typeFilter = mapmap.querySelector('#housing-type');
   var priceFilter = mapmap.querySelector('#housing-price');
@@ -19,8 +20,8 @@
       max: 50000
     },
     'low': {
-      min: 10000,
-      max: 50000
+      min: 0,
+      max: 10000
     },
     'high': {
       min: 50000,
@@ -29,7 +30,7 @@
 
     'any': {
       min: 0,
-      max: 1000000
+      max: 10000000
     }
   };
 
@@ -71,7 +72,23 @@
       window.filter.sortedHotels = [];
     },
 
+    active: function () {
+      for (var i = 0; i < mapFilters.length; i++) {
+        mapFilters[i].addEventListener('change', function () {
+          window.filter.sorting(window.backend.data)
+          window.map.insertPins();
+        });
+      }
+      for (var i = 0; i < mapChekboxes.length; i++) {
+        mapChekboxes[i].addEventListener('change', function () {
+          window.filter.sorting(window.backend.data)
+          window.map.insertPins();
+        });
+      }
+    },
+
     sorting: function (hotelList) {
+      debugger
       var needHotel = getNeedHotel();
       var needHotelOffer = needHotel.offer;
       var sortedHotels = [];
@@ -88,9 +105,13 @@
         if (hotelOffer.guests !== needHotelOffer.guests && needHotelOffer.guests !== 'any') {
           continue;
         }
-        if (hotelOffer.price < priceRank[needHotelOffer.price].min && hotelOffer.price > priceRank[needHotelOffer.price].max && needHotelOffer.type !== 'any') {
-          continue;
+
+        if (needHotelOffer.pice !== 'any') {
+          if (hotelOffer.price < priceRank[needHotelOffer.price].min || hotelOffer.price > priceRank[needHotelOffer.price].max) {
+            continue;
+          }
         }
+
         if (hotelOffer.features.length < needHotelOffer.features.length) {
           continue;
         }
