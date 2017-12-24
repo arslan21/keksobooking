@@ -42,7 +42,7 @@
         var pinForInsert = window.pin.renderPin(hotelList[i]);
         fragment.appendChild(pinForInsert);
         if (i === 4) {
-          break
+          break;
         }
       }
       mapPins.appendChild(fragment);
