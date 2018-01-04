@@ -64,13 +64,17 @@
     };
   }
 
-  function debounce() {
-    var prevTimer;
-    window.clearTimeout(prevTimer);
-    prevTimer = window.setTimeout(function () {
+  function insertSortedPins() {
+    debounce(function () {
       window.filter.getFilterValues(window.backend.data);
       window.map.insertPins();
     }, 500);
+  }
+
+  function debounce(func, time) {
+    var prevTimer;
+    window.clearTimeout(prevTimer);
+    prevTimer = window.setTimeout(func, time);
   }
 
   window.filter = {
@@ -80,10 +84,10 @@
 
     active: function () {
       for (var i = 0; i < mapFilters.length; i++) {
-        mapFilters[i].addEventListener('change', debounce);
+        mapFilters[i].addEventListener('change', insertSortedPins);
       }
       for (var j = 0; j < mapChekboxes.length; j++) {
-        mapChekboxes[j].addEventListener('change', debounce);
+        mapChekboxes[j].addEventListener('change', insertSortedPins);
       }
     },
 

@@ -48,6 +48,12 @@
         }
       }
       return true;
+    },
+
+    debounce: function (func, time) {
+      var prevTimer;
+      window.clearTimeout(prevTimer);
+      prevTimer = window.setTimeout(func, time);
     }
 
   };
