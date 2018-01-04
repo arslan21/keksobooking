@@ -54,8 +54,8 @@
         </select>
 
         <select name="housing-guests" id="housing-guests" class="map__filter">
-          <option value="any">Любое число гостей</option>
-          <option value="1" selected>Один гость</option>
+          <option value="any" selected>Любое число гостей</option>
+          <option value="1">Один гость</option>
           <option value="2">Два гостя</option>
         </select>
 
@@ -257,7 +257,7 @@
 <script src="js/controller.js" type="text/javascript"></script>
 <script src="js/filter.js" type="text/javascript"></script>
 <script type="text/javascript">
-  window.backend.load(window.filter.sortHotels, window.errorMessage);
+  window.backend.load(window.filter.getSortedHotels, window.errorMessage);
 </script>
 </body>
 </html>

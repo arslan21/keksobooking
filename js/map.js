@@ -26,7 +26,7 @@
     initialize: function () {
       mapPinMain.addEventListener('mouseup', function (evt) {
         map.classList.remove('map--faded');
-        window.filter.sorting(window.backend.data);
+        window.filter.getFilterValues(window.backend.data);
         // var hotelList = window.filter.sortedHotels;
         window.map.insertPins();
         window.controller.placeNotice(evt, getAddress(evt));

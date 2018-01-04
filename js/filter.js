@@ -33,7 +33,7 @@
     }
   };
 
-  function getNeedHotel() {
+  function getNeedHotelOffer() {
     var guestsValue = guestsFilter.options[guestsFilter.selectedIndex].value;
     if (guestsValue !== 'any') {
       guestsValue = parseInt(guestsValue, 10);
@@ -56,13 +56,11 @@
     });
 
     return {
-      'offer': {
-        'type': typeValue,
-        'price': priceValue,
-        'rooms': roomsValue,
-        'guests': guestsValue,
-        'features': featuresNeed
-      }
+      'type': typeValue,
+      'price': priceValue,
+      'rooms': roomsValue,
+      'guests': guestsValue,
+      'features': featuresNeed
     };
   }
 
@@ -70,13 +68,13 @@
     var prevTimer;
     window.clearTimeout(prevTimer);
     prevTimer = window.setTimeout(function () {
-      window.filter.sorting(window.backend.data);
+      window.filter.getFilterValues(window.backend.data);
       window.map.insertPins();
     }, 500);
   }
 
   window.filter = {
-    sortHotels: function () {
+    getSortedHotels: function () {
       window.filter.sortedHotels = [];
     },
 
@@ -89,43 +87,16 @@
       }
     },
 
-    sorting: function (hotelList) {
-      var needHotel = getNeedHotel();
-      var needHotelOffer = needHotel.offer;
-      var sortedHotels = [];
-      out:
-      for (var i = 0; i < hotelList.length; i++) {
-
-        var hotelOffer = hotelList[i].offer;
-        if (hotelOffer.type !== needHotelOffer.type && needHotelOffer.type !== 'any') {
-          continue;
-        }
-        if (hotelOffer.rooms !== needHotelOffer.rooms && needHotelOffer.rooms !== 'any') {
-          continue;
-        }
-        if (hotelOffer.guests !== needHotelOffer.guests && needHotelOffer.guests !== 'any') {
-          continue;
-        }
-
-        if (needHotelOffer.pice !== 'any') {
-          if (hotelOffer.price < priceRank[needHotelOffer.price].min || hotelOffer.price > priceRank[needHotelOffer.price].max) {
-            continue;
-          }
-        }
-
-        if (hotelOffer.features.length < needHotelOffer.features.length) {
-          continue;
-        }
-        for (var j = 0; j < needHotelOffer.features.length; j++) {
-          var feature = needHotelOffer.features[j];
-          var hotelFeatures = hotelOffer.features;
-          if (hotelFeatures.indexOf(feature) === -1) {
-            continue out;
-          }
-        }
-        sortedHotels.push(hotelList[i]);
-      }
-
+    getFilterValues: function (hotelList) {
+      var needHotelOffer = getNeedHotelOffer();
+      var sortedHotels = hotelList.filter(function (hotel) {
+        var hotelOffer = hotel.offer;
+        return (needHotelOffer.type === 'any' || hotelOffer.type === needHotelOffer.type) &&
+          (needHotelOffer.rooms === 'any' || hotelOffer.rooms === needHotelOffer.rooms) &&
+          (needHotelOffer.guests === 'any' || hotelOffer.guests >= needHotelOffer.guests) &&
+          (needHotelOffer.price === 'any' || (hotelOffer.price >= priceRank[needHotelOffer.price].min && hotelOffer.price <= priceRank[needHotelOffer.price].max)) &&
+          (needHotelOffer.features.length === 0 || window.util.checkArray(hotelOffer.features, needHotelOffer.features));
+      });
       window.filter.sortedHotels = sortedHotels;
     }
 

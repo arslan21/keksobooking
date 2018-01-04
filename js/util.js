@@ -35,6 +35,19 @@
         optionsValues[i] = selectField.options[i].value;
       }
       return optionsValues;
+    },
+
+    checkArray: function (array1, array2) {
+      if (array1 < array2) {
+        return false;
+      }
+      for (var i = 0; i < array2.length; i++) {
+        var value = array2[i];
+        if (array1.indexOf(value) === -1) {
+          return false;
+        }
+      }
+      return true;
     }
 
   };
