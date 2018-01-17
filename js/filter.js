@@ -33,7 +33,7 @@
     }
   };
 
-  function getNeedHotelOffer() {
+  function NeedHotelOffer() {
     var guestsValue = guestsFilter.options[guestsFilter.selectedIndex].value;
     if (guestsValue !== 'any') {
       guestsValue = parseInt(guestsValue, 10);
@@ -55,13 +55,11 @@
       return input.value;
     });
 
-    return {
-      'type': typeValue,
-      'price': priceValue,
-      'rooms': roomsValue,
-      'guests': guestsValue,
-      'features': featuresNeed
-    };
+    this.type = typeValue;
+    this.price = priceValue;
+    this.rooms = roomsValue;
+    this.guests = guestsValue;
+    this.features = featuresNeed;
   }
 
   function insertSortedPins() {
@@ -92,7 +90,7 @@
     },
 
     getFilterValues: function (hotelList) {
-      var needHotelOffer = getNeedHotelOffer();
+      var needHotelOffer = new NeedHotelOffer();
       var sortedHotels = hotelList.filter(function (hotel) {
         var hotelOffer = hotel.offer;
         return (needHotelOffer.type === 'any' || hotelOffer.type === needHotelOffer.type) &&
