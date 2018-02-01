@@ -5,9 +5,10 @@
   window.map.initialize();
 
   window.controller = {
-    placeNotice: function (evt, address) {
+    placeNotice: function () {
       window.form.activateNotice();
-      window.form.setAddress(address);
+      window.drag.dragPin();
+      window.form.setAddress();
       window.form.disabeledCapacityOptions();
     }
   };

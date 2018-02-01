@@ -6,22 +6,6 @@
   var mapPinMain = map.querySelector('.map__pin--main');
 
 
-  function getAddress(evt) {
-    var pinStyle = getComputedStyle(evt.currentTarget);
-    var afterPinStyle = getComputedStyle(evt.currentTarget, '::after');
-
-    var pinStyeLeft = parseInt(pinStyle.left, 10);
-    var pinStyeTop = parseInt(pinStyle.top, 10);
-    var pinStyeHeight = parseInt(pinStyle.height, 10);
-    var afterPinStyeHeight = parseInt(afterPinStyle.borderTopWidth, 10);
-
-    var mapPinMainX = pinStyeLeft;
-    var mapPinMainY = pinStyeTop + (pinStyeHeight + afterPinStyeHeight) / 2;
-
-    var address = 'x: ' + mapPinMainX + ', y: ' + mapPinMainY;
-    return address;
-  }
-
   window.map = {
     initialize: function () {
       mapPinMain.addEventListener('mouseup', function (evt) {
@@ -29,9 +13,27 @@
         window.filter.getFilterValues(window.backend.data);
         // var hotelList = window.filter.sortedHotels;
         window.map.insertPins();
-        window.controller.placeNotice(evt, getAddress(evt));
+        window.controller.placeNotice(evt, window.map.getAddress(evt));
         window.filter.active();
       });
+    },
+
+    getAddress: function () {
+      var pinStyle = getComputedStyle(mapPinMain);
+      var afterPinStyle = getComputedStyle(mapPinMain, '::after');
+
+      var pinStyeLeft = parseInt(pinStyle.left, 10);
+      var pinStyeTop = parseInt(pinStyle.top, 10);
+      var pinStyeHeight = parseInt(pinStyle.height, 10);
+      var afterPinStyeHeight = parseInt(afterPinStyle.borderTopWidth, 10);
+
+      var mapPinMainX = pinStyeLeft;
+      var mapPinMainY = pinStyeTop + (pinStyeHeight + afterPinStyeHeight) / 2;
+      var address = {
+        x: mapPinMainX,
+        y: mapPinMainY
+      };
+      return address;
     },
 
     insertPins: function () {
@@ -62,6 +64,5 @@
     mapFaded: function () {
       map.classList.add('map--faded');
     }
-
   };
 })();

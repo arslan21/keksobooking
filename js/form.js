@@ -186,8 +186,9 @@
       });
     },
 
-    setAddress: function (address) {
-      addressField.value = address;
+    setAddress: function () {
+      var address = window.map.getAddress();
+      addressField.value = 'x:' + address.x + ' y:' + address.y;
 
       addressField.disabled = false;
       addressField.readOnly = true;
