@@ -35,7 +35,6 @@
     dragablePin.removeEventListener('mouseup', onMouseUp);
   }
 
-
   window.drag = {
     dragPin: function () {
       dragablePin.addEventListener('mousedown', function (evt) {
